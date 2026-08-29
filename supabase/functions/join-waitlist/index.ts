@@ -30,31 +30,51 @@ function json(body: unknown, status = 200): Response {
   });
 }
 
+const LOGO = "https://www.buddyai.co.in/buddy-email-logo.png";
+
+/**
+ * Kept deliberately flat: one wrapper table, one content cell. Gmail collapses
+ * mail behind a "show trimmed content" toggle when the markup nests deeply,
+ * which is what split the first version into two grey boxes on mobile.
+ */
 function welcomeEmail(name: string, companion: string): { subject: string; html: string; text: string } {
   const who = name || "there";
   const buddy = COMPANIONS[companion] ?? "Sage";
-  const subject = "You've been added to the Buddy waitlist";
+  const subject = `You're on the list, ${who}`;
+
   const text =
     `Hi ${who},\n\n` +
-    `You have been added to the waitlist, and ${buddy} is ready when you are.\n\n` +
-    `We will get back to you with an update once the app is live and you can ` +
-    `start using it. Nothing else to do for now.\n\n` +
-    `Thanks for being early.\n\nBuddy\nbuddyai.co.in\n`;
-  const html = `<!doctype html><html><body style="margin:0;background:#0A0908;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0A0908;padding:40px 20px">
-    <tr><td align="center">
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;background:#141210;border:1px solid #262220;border-radius:16px;padding:40px">
-        <tr><td>
-          <div style="width:44px;height:44px;border-radius:46% 54% 55% 45%/53% 47% 53% 47%;background:linear-gradient(160deg,#FFD23F 25%,#FF7A1A 60%,#F24E1E 92%);margin-bottom:26px"></div>
-          <h1 style="margin:0 0 16px;font-size:26px;line-height:1.2;color:#F7F3EA;font-weight:700">You have been added to the waitlist.</h1>
-          <p style="margin:0 0 16px;font-size:16px;line-height:1.65;color:#B9B1A3">Hi ${who}, thanks for creating your buddy. <strong style="color:#F7F3EA">${buddy}</strong> is ready when you are.</p>
-          <p style="margin:0 0 16px;font-size:16px;line-height:1.65;color:#B9B1A3">We will get back to you with an update once the app is live and you can start using it. There is nothing else you need to do.</p>
-          <p style="margin:0 0 32px;font-size:16px;line-height:1.65;color:#B9B1A3">Thanks for being early.</p>
-          <p style="margin:0;font-size:13px;color:#7D766B">Buddy &middot; <a href="https://buddyai.co.in" style="color:#FF7A1A;text-decoration:none">buddyai.co.in</a><br>You got this because you signed up for early access at buddyai.co.in.</p>
-        </td></tr>
-      </table>
-    </td></tr>
-  </table></body></html>`;
+    `Thanks for creating your buddy. ${buddy} is yours, and will be waiting when we open the doors.\n\n` +
+    `We're building Buddy for the moments when you want to talk and nobody is free. The late nights. ` +
+    `The days that went sideways. The good news you want to tell someone straight away.\n\n` +
+    `You're on the list now. We'll email you the moment your access is ready, and there is nothing ` +
+    `else you need to do.\n\n` +
+    `Look after yourself until then.\n\n` +
+    `Deekshitha\nFounder, buddy.ai\n\n` +
+    `You're getting this because you signed up for early access at buddyai.co.in\n`;
+
+  const html = `<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
+<meta name="color-scheme" content="light"><title>${subject}</title></head>
+<body style="margin:0;padding:0;background:#FAF7F1;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#FAF7F1;">
+<tr><td align="center" style="padding:40px 20px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:480px;background:#FFFFFF;border:1px solid #ECE6DC;border-radius:16px;">
+<tr><td style="padding:40px 36px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:#141210;">
+<img src="${LOGO}" width="64" height="64" alt="Buddy" style="display:block;border:0;outline:none;width:64px;height:64px;margin:0 0 24px;">
+<h1 style="margin:0 0 20px;font-size:25px;line-height:1.25;font-weight:700;color:#141210;">You're on the list.</h1>
+<p style="margin:0 0 16px;font-size:16px;line-height:1.65;color:#3D3833;">Hi ${who},</p>
+<p style="margin:0 0 16px;font-size:16px;line-height:1.65;color:#3D3833;">Thanks for creating your buddy. <strong style="color:#141210;">${buddy}</strong> is yours, and will be waiting when we open the doors.</p>
+<p style="margin:0 0 16px;font-size:16px;line-height:1.65;color:#3D3833;">We're building Buddy for the moments when you want to talk and nobody is free. The late nights. The days that went sideways. The good news you want to tell someone straight away.</p>
+<p style="margin:0 0 16px;font-size:16px;line-height:1.65;color:#3D3833;">You're on the list now. We'll email you the moment your access is ready, and there is nothing else you need to do.</p>
+<p style="margin:0 0 28px;font-size:16px;line-height:1.65;color:#3D3833;">Look after yourself until then.</p>
+<p style="margin:0;font-size:16px;line-height:1.5;color:#141210;font-weight:600;">Deekshitha</p>
+<p style="margin:0 0 32px;font-size:14px;line-height:1.5;color:#6B645A;">Founder, buddy.ai</p>
+<p style="margin:0;padding-top:22px;border-top:1px solid #ECE6DC;font-size:12.5px;line-height:1.6;color:#A39C90;">You're getting this because you signed up for early access at <a href="https://www.buddyai.co.in" style="color:#E8590C;text-decoration:none;">buddyai.co.in</a>.</p>
+</td></tr></table>
+</td></tr></table>
+</body></html>`;
+
   return { subject, html, text };
 }
 

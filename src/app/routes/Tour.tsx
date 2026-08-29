@@ -11,6 +11,7 @@ import { BookOpen, House, MessageCircle, Settings as Cog, Waves, type LucideIcon
 import { BuddyBlob } from "../components/BuddyBlob";
 import { Logo } from "../components/Logo";
 import { SiteFooter } from "../components/SiteFooter";
+import { useReveal } from "../lib/useReveal";
 
 const MINT = "#FFD23F";
 const IRIS = "#FF7A1A";
@@ -112,26 +113,81 @@ const TOUR_CSS = `
 .tr-links { display: flex; align-items: center; gap: 26px; font-size: 14px; }
 .tr-links a { color: #B9B1A3; text-decoration: none; transition: color .15s ease; min-height: 44px; display: inline-flex; align-items: center; }
 .tr-links a:hover { color: #F7F3EA; }
-.tr-row { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 56px; align-items: center; }
-.tr-row.flip .tr-copy { order: 2; }
-.tr-shot { border-radius: 18px; overflow: hidden; border: 1px solid rgba(255,255,255,.10); box-shadow: 0 30px 70px rgba(0,0,0,.55); background: #FAF7F1; }
-.tr-shot img { display: block; width: 100%; height: auto; }
-.tr-anchor { scroll-margin-top: 76px; }
+.tr-anchor { scroll-margin-top: 84px; }
+
+/* Each section is a card that settles into place as it enters the viewport. */
+.tr-card {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 64px;
+  align-items: center;
+  padding: 56px 60px;
+  border-radius: 28px;
+  border: 1px solid rgba(255,255,255,.08);
+  background:
+    radial-gradient(120% 140% at 100% 0%, rgba(255,122,26,.07), transparent 60%),
+    rgba(255,255,255,.022);
+}
+.tr-card.flip { grid-template-columns: 380px 1fr; }
+.tr-card.flip .tr-copy { order: 2; }
+.tr-card.flip .tr-device { order: 1; }
+
+/* Phone frame. Every screenshot is the same pixel size, so one frame fits all. */
+.tr-device { display: flex; justify-content: center; }
+.tr-phone {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  aspect-ratio: 490 / 1060;
+  border-radius: 42px;
+  padding: 10px;
+  background: linear-gradient(160deg, #2A2621, #131110 60%);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.10),
+    0 40px 80px rgba(0,0,0,.60),
+    inset 0 1px 0 rgba(255,255,255,.14);
+}
+.tr-phone::after {
+  content: "";
+  position: absolute;
+  top: 20px; left: 50%; transform: translateX(-50%);
+  width: 84px; height: 7px; border-radius: 99px;
+  background: rgba(0,0,0,.55);
+  z-index: 2;
+}
+.tr-screen { width: 100%; height: 100%; border-radius: 33px; overflow: hidden; background: #FAF7F1; }
+.tr-screen img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+
 .tr-jump { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
 .tr-jump a { display: inline-flex; align-items: center; gap: 8px; padding: 9px 15px; border-radius: 999px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.03); color: #B9B1A3; font-size: 13.5px; text-decoration: none; transition: border-color .15s ease, color .15s ease; }
 .tr-jump a:hover { color: #F7F3EA; border-color: rgba(255,255,255,.3); }
-@media (max-width: 900px) {
-  .tr-row { grid-template-columns: 1fr; gap: 28px; }
-  .tr-row.flip .tr-copy { order: 0; }
+
+/* Reveal on scroll: the card lifts and settles, the phone follows a beat later. */
+[data-reveal] { opacity: 0; transform: translateY(34px) scale(.985); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); will-change: opacity, transform; }
+[data-reveal="in"] { opacity: 1; transform: none; }
+[data-reveal] .tr-device { opacity: 0; transform: translateY(26px); transition: opacity .75s cubic-bezier(.2,.7,.2,1) .12s, transform .75s cubic-bezier(.2,.7,.2,1) .12s; }
+[data-reveal="in"] .tr-device { opacity: 1; transform: none; }
+
+@media (max-width: 980px) {
+  .tr-card, .tr-card.flip { grid-template-columns: 1fr; gap: 36px; padding: 44px 30px; text-align: left; }
+  .tr-card.flip .tr-copy, .tr-card.flip .tr-device { order: 0; }
+  .tr-phone { max-width: 268px; }
 }
 @media (max-width: 720px) {
   .tr-links { display: none; }
   .tr-nav { padding: 12px 18px; gap: 12px; }
+  .tr-card, .tr-card.flip { padding: 34px 22px; border-radius: 22px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal], [data-reveal] .tr-device { opacity: 1; transform: none; transition: none; }
 }
 `;
 
 export function Tour() {
   const location = useLocation();
+  useReveal();
 
   useEffect(() => {
     const id = location.hash.replace(/^#/, "");
@@ -188,8 +244,9 @@ export function Tour() {
               This is what you're <span className="text-gradient">signing up for</span>.
             </h1>
             <p className="text-fog" style={{ margin: "0 auto 30px", maxWidth: 600, fontSize: 17, lineHeight: 1.6 }}>
-              Every screen below is the real app, not a mockup. It is built and working. We are opening
-              access in waves, and early access puts you in the first one.
+              buddy is a phone app. Every screen below is the real thing, captured from the running
+              build rather than mocked up. We are opening access in waves, and early access puts you in
+              the first one.
             </p>
             <nav className="tr-jump" aria-label="Jump to a section">
               {SECTIONS.map(({ id, eyebrow, Icon, color }) => (
@@ -204,8 +261,14 @@ export function Tour() {
 
         {/* Sections */}
         {SECTIONS.map((s, i) => (
-          <section key={s.id} id={s.id} className="tr-anchor px-6 pb-[72px]" aria-labelledby={`${s.id}-title`}>
-            <div className={`container-lg tr-row${i % 2 === 1 ? " flip" : ""}`}>
+          <section
+            key={s.id}
+            id={s.id}
+            className="tr-anchor px-6"
+            style={{ paddingBottom: 26 }}
+            aria-labelledby={`${s.id}-title`}
+          >
+            <div className={`tr-card${i % 2 === 1 ? " flip" : ""}`} data-reveal="">
               <div className="tr-copy">
                 <p className="eyebrow" style={{ margin: "0 0 12px", color: s.color }}>
                   {s.eyebrow}
@@ -213,27 +276,39 @@ export function Tour() {
                 <h2
                   id={`${s.id}-title`}
                   className="h-display"
-                  style={{ margin: "0 0 16px", fontSize: "clamp(27px, 3.3vw, 38px)", lineHeight: 1.12 }}
+                  style={{ margin: "0 0 16px", fontSize: "clamp(27px, 3.1vw, 36px)", lineHeight: 1.14 }}
                 >
                   {s.title}
                 </h2>
-                <p className="text-pretty text-[16px] leading-[1.65] text-fog" style={{ margin: "0 0 20px" }}>
+                <p className="text-pretty text-[16px] leading-[1.65] text-fog" style={{ margin: "0 0 22px", maxWidth: "46ch" }}>
                   {s.body}
                 </p>
-                <ul className="m-0 list-none p-0" style={{ display: "grid", gap: 10 }}>
-                  {s.points.map((p) => (
-                    <li key={p} className="flex gap-[10px] text-[15px] leading-[1.55] text-fog">
+                <ul className="m-0 list-none p-0" style={{ display: "grid", gap: 11 }}>
+                  {s.points.map((pt) => (
+                    <li key={pt} className="flex gap-[11px] text-[15px] leading-[1.55] text-fog">
                       <span style={{ color: s.color, fontWeight: 700 }} aria-hidden="true">
                         ✓
                       </span>
-                      {p}
+                      {pt}
                     </li>
                   ))}
                 </ul>
               </div>
-              <figure className="tr-shot m-0">
-                <img src={s.shot} alt={s.alt} width={1600} loading={i === 0 ? "eager" : "lazy"} decoding="async" />
-              </figure>
+
+              <div className="tr-device">
+                <div className="tr-phone">
+                  <div className="tr-screen">
+                    <img
+                      src={s.shot}
+                      alt={s.alt}
+                      width={554}
+                      height={1200}
+                      loading={i === 0 ? "eager" : "lazy"}
+                      decoding="async"
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </section>
         ))}

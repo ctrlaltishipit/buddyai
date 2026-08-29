@@ -45,6 +45,49 @@ export function readPending(): PendingSignup {
   return { companion: "sage", display_name: "" };
 }
 
+/* Google's dark-theme button spec, adapted to the buddy surface. The label is
+   optically centred by padding the row with an icon-sized spacer on both sides. */
+const GSI_CSS = `
+.gsi-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  height: 52px;
+  padding: 0 16px;
+  border-radius: 26px;
+  border: 1px solid #5F6368;
+  background: #131314;
+  color: #E3E3E3;
+  font-family: inherit;
+  font-size: 15.5px;
+  font-weight: 500;
+  letter-spacing: .1px;
+  cursor: pointer;
+  transition: background .15s ease, border-color .15s ease, box-shadow .15s ease;
+}
+.gsi-btn:hover:not(:disabled) {
+  background: #1B1B1C;
+  border-color: #8E918F;
+  box-shadow: 0 1px 3px rgba(0,0,0,.4);
+}
+.gsi-btn:active:not(:disabled) { background: #202021; }
+.gsi-btn:focus-visible {
+  outline: none;
+  border-color: #FF7A1A;
+  box-shadow: 0 0 0 3px rgba(255,122,26,.28);
+}
+.gsi-btn:disabled { opacity: .75; cursor: default; }
+.gsi-icon {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  flex: none;
+}
+.gsi-label { flex: 1; text-align: center; }
+`;
+
 function GoogleMark() {
   return (
     <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true">
@@ -94,6 +137,7 @@ export function EarlyAccess() {
 
   return (
     <div className="surface-dark" style={{ minHeight: "100dvh", display: "flex", flexDirection: "column" }}>
+      <style>{GSI_CSS}</style>
       <header style={{ padding: "18px 24px" }}>
         <Logo tone="dark" to="/" />
       </header>
@@ -194,27 +238,16 @@ export function EarlyAccess() {
 
               <button
                 type="button"
-                className="btn btn-block"
+                className="gsi-btn"
                 onClick={() => void signInWithGoogle()}
                 disabled={pending}
-                style={{
-                  background: "#F7F3EA",
-                  color: "#141210",
-                  gap: 10,
-                  height: 52,
-                  fontSize: 15.5,
-                  fontWeight: 600,
-                }}
+                aria-label="Continue with Google"
               >
-                {pending ? (
-                  <>
-                    <span className="spinner" aria-hidden="true" /> Opening Google…
-                  </>
-                ) : (
-                  <>
-                    <GoogleMark /> Continue with Google
-                  </>
-                )}
+                <span className="gsi-icon" aria-hidden="true">
+                  {pending ? <span className="spinner" /> : <GoogleMark />}
+                </span>
+                <span className="gsi-label">{pending ? "Opening Google\u2026" : "Continue with Google"}</span>
+                <span className="gsi-icon" aria-hidden="true" />
               </button>
 
               {error && (

@@ -12,6 +12,7 @@ import type { CSSProperties, ReactNode } from "react";
 import { Link } from "react-router";
 import { MessageCircle, PenLine } from "lucide-react";
 import { BuddyBlob } from "../components/BuddyBlob";
+import { MoodCheckIn } from "../components/MoodCheckIn";
 import { EmotionPill } from "../components/EmotionPill";
 import { entriesApi, insightsApi } from "../lib/api";
 import { dateLine, firstName, formatEntryStamp, greetingFor } from "../lib/constants";
@@ -146,7 +147,7 @@ export function Home() {
       <section className="grid-3" style={{ marginTop: 28 }} aria-label="This week at a glance" aria-busy={summary.loading}>
         {summary.loading && !s ? (
           <>
-            {["Entries this week", "Current streak", "Leaning"].map((label) => (
+            {["Entries this week", "Last 7 days", "Leaning"].map((label) => (
               <StatCard key={label} label={label}>
                 <Skel h={36} w={label === "Leaning" ? 120 : 64} />
               </StatCard>
@@ -163,11 +164,11 @@ export function Home() {
                 {s?.entries_this_week ?? 0}
               </div>
             </StatCard>
-            <StatCard label="Current streak">
+            <StatCard label="Last 7 days">
               <div className="font-display" style={statValue}>
-                {s?.streak_days ?? 0}{" "}
+                {s?.active_days_last_7 ?? 0}{" "}
                 <span className="font-sans text-app-sub" style={{ fontSize: 15, fontWeight: 600 }}>
-                  {(s?.streak_days ?? 0) === 1 ? "day" : "days"}
+                  {(s?.active_days_last_7 ?? 0) === 1 ? "day" : "days"}
                 </span>
               </div>
             </StatCard>
@@ -182,6 +183,11 @@ export function Home() {
             </StatCard>
           </>
         )}
+      </section>
+
+      {/* The lowest-effort way onto the map, above the actions that need writing. */}
+      <section style={{ marginTop: 16 }} aria-label="Quick check-in">
+        <MoodCheckIn />
       </section>
 
       {/* Actions */}

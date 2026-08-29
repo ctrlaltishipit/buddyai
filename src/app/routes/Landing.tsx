@@ -243,15 +243,15 @@ export function Landing() {
                 letterSpacing: "-0.03em",
               }}
             >
-              Someone to talk to, <span className="text-gradient">day or night</span>.
+              Someone to talk to at <span className="text-gradient">2am</span>.
             </h1>
             <p
               className="anim-fade-up text-fog"
               style={{ ...fadeUp(0.26), margin: "20px auto 0", maxWidth: 840, fontSize: 17.5, lineHeight: 1.6 }}
             >
-              Vent, think out loud, or just write the day down.
+              And a record of how you actually felt.
               <br />
-              buddy listens, helps you make sense of it, and keeps every word private to you.
+              buddy listens and asks. It never tells you what to do, and every word stays private to you.
               <br />
               <span className="text-mint">Create your buddy now and we will email you when app access opens.</span>
             </p>

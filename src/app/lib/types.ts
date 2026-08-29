@@ -19,7 +19,7 @@ export type EmotionName =
   | "shame"
   | "neutral";
 
-export type TemplateId = "freeform" | "cbt" | "gratitude" | "checkin";
+export type TemplateId = "freeform" | "cbt" | "gratitude" | "checkin" | "mood";
 export type CompanionId = "sage" | "sol" | "ember";
 export type Region = "IN" | "US" | "OTHER";
 export type Tone = "warm" | "neutral" | "brief";
@@ -127,6 +127,8 @@ export interface InsightsSummary {
   entries_this_week: number;
   entries_today: number;
   streak_days: number;
+  /** Days written in the last 7. A rolling window, so it cannot be broken. */
+  active_days_last_7: number;
   /** Dominant confirmed emotion over the last 7 days, or null if no entries. */
   leaning: string | null;
   total_entries: number;

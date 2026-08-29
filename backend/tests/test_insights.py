@@ -31,6 +31,7 @@ def test_empty_summary_and_map(client):
     s = acct.get("/insights/summary?tz_offset=%d" % TZ).json()
     assert s == {
         "entries_this_week": 0, "entries_today": 0, "streak_days": 0,
+        "active_days_last_7": 0,
         "leaning": None, "total_entries": 0, "last_entry_at": None,
     }
     for rng, n in (("week", 7), ("month", 5), ("all", 4)):
@@ -172,3 +173,30 @@ def test_single_entry_does_not_claim_a_shift(client, db):
     assert cards["Biggest shift"]["value"] == "None yet"
     assert cards["Biggest shift"]["sub"] == "Nothing has shifted much yet."
     assert "Climbing" not in cards["Biggest shift"]["sub"]
+
+
+def test_rolling_window_survives_a_missed_day(client, db):
+    """A gap breaks the consecutive streak but must not empty the 7-day window.
+
+    This is the whole point of the rolling count: someone who misses a day has
+    still shown up, and the UI must never have to render that as a failure.
+    """
+    acct = make_account(client)
+    today = _today_local()
+    # Wrote today, yesterday, then a gap at 2 days ago, then 3 and 4 days ago.
+    for offset in (0, 1, 3, 4):
+        _make(acct, db, "entry %d" % offset, today - timedelta(days=offset))
+
+    s = acct.get("/insights/summary?tz_offset=%d" % TZ).json()
+    assert s["streak_days"] == 2, "consecutive run is today plus yesterday"
+    assert s["active_days_last_7"] == 4, "all four days still count in the window"
+
+
+def test_rolling_window_ignores_days_older_than_seven(client, db):
+    acct = make_account(client)
+    today = _today_local()
+    _make(acct, db, "recent", today)
+    _make(acct, db, "ancient", today - timedelta(days=9))
+
+    s = acct.get("/insights/summary?tz_offset=%d" % TZ).json()
+    assert s["active_days_last_7"] == 1

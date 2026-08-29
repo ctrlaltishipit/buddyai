@@ -124,6 +124,9 @@ def summary(db: Session, user_id: str, tz_offset: int) -> InsightsSummary:
         streak += 1
         cursor -= timedelta(days=1)
 
+    # Rolling window: how many of the last 7 local days have an entry.
+    active_7 = sum(1 for i in range(7) if (today - timedelta(days=i)) in days)
+
     leaning: Optional[str] = None
     if entries_week:
         win_start = _day_start_utc(week_start, tz_offset)
@@ -153,6 +156,7 @@ def summary(db: Session, user_id: str, tz_offset: int) -> InsightsSummary:
         entries_this_week=entries_week,
         entries_today=entries_today,
         streak_days=streak,
+        active_days_last_7=active_7,
         leaning=leaning,
         total_entries=total,
         last_entry_at=aware(last_at),

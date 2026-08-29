@@ -18,7 +18,7 @@ from pydantic import BaseModel, EmailStr, Field, field_validator
 CompanionId = Literal["sage", "sol", "ember"]
 Region = Literal["IN", "US", "OTHER"]
 Tone = Literal["warm", "neutral", "brief"]
-TemplateId = Literal["freeform", "cbt", "gratitude", "checkin"]
+TemplateId = Literal["freeform", "cbt", "gratitude", "checkin", "mood"]
 OnboardingStep = Literal["verify", "name", "companion", "goals", "reminder", "done"]
 MapRange = Literal["week", "month", "all"]
 
@@ -218,6 +218,10 @@ class InsightsSummary(BaseModel):
     entries_this_week: int
     entries_today: int
     streak_days: int
+    # Days written in the last 7, counted as a rolling window. Unlike a
+    # consecutive streak this cannot be "broken", so a missed day never has to
+    # be shown to the user as a failure.
+    active_days_last_7: int = 0
     leaning: Optional[str] = None
     total_entries: int
     last_entry_at: Optional[datetime] = None

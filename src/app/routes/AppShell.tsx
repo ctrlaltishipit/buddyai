@@ -106,18 +106,27 @@ function StreakCard({
 
   const n = Math.max(0, days ?? 0);
   const filled = Math.min(n, 7);
+  // Copy never mentions a gap. An unfilled dot is just an unfilled dot: this is
+  // a mental-health app, and framing absence as failure punishes the people
+  // most likely to have missed a day for a reason.
+  const note =
+    n === 0
+      ? "One entry is all it takes to start."
+      : n < 3
+        ? "Your map gets sharper the more you feed it."
+        : n < 7
+          ? "Enough for the map to start seeing a shape."
+          : "Every one of the last seven days.";
   return (
     <div style={STREAK_CARD} aria-live="polite">
       <div className="font-display text-[15px] font-semibold" style={{ marginBottom: 3 }}>
-        {n === 0 ? "Start a streak" : `${n}-day streak`}
+        {n === 0 ? "Your last 7 days" : `${n} of the last 7 days`}
       </div>
-      <div className="text-[12.5px] leading-[1.5] text-app-sub">
-        {n === 0 ? "One entry today is all it takes." : "Come back tomorrow to keep it alive."}
-      </div>
+      <div className="text-[12.5px] leading-[1.5] text-app-sub">{note}</div>
       <div
         className="mt-[10px] flex gap-1"
         role="img"
-        aria-label={`${filled} of the last 7 days journaled`}
+        aria-label={`${filled} of the last 7 days written in`}
       >
         {Array.from({ length: 7 }, (_, i) => (
           <div

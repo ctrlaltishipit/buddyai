@@ -289,7 +289,10 @@ def emotion_map(db: Session, user_id: str, range_: str, tz_offset: int) -> Insig
             if best is None or em.score > best[0]:
                 peak[em.emotion] = (em.score, lt)
 
-    top = sorted(totals.keys(), key=lambda k: (-totals[k], k))[:3]
+    # Five threads, not three. A fortnight of honest entries rarely has only
+    # three feelings in it, and cutting to three hid the range that makes the
+    # map worth looking at. Ties break alphabetically so the chart is stable.
+    top = sorted(totals.keys(), key=lambda k: (-totals[k], k))[:5]
     series = [
         MapSeries(
             emotion=k,

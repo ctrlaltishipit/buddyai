@@ -80,7 +80,7 @@ const SECTIONS: Section[] = [
     eyebrow: "EMOTION MAP",
     Icon: Waves,
     color: MINT,
-    title: "See how you've been.",
+    title: "A record of how you actually felt.",
     body: "Every feeling you confirm on an entry becomes a thread. Over a few weeks the threads make a shape, and the shape shows you things you would not have noticed on your own.",
     points: [
       "Each emotion drawn over a week, a month, or all of it",
@@ -115,13 +115,15 @@ const TOUR_CSS = `
 .tr-links a:hover { color: #F7F3EA; }
 .tr-anchor { scroll-margin-top: 84px; }
 
-/* Each section owns a viewport and carries one slow drifting glow behind it,
-   so there is always something quietly moving without competing with the copy. */
-.tr-sec { position: relative; }
+/* Every section owns a screen. Generous vertical rhythm is what makes a scroll
+   feel like arriving at a new card instead of sliding down one long page. */
+.tr-sec { position: relative; padding-top: 54px; padding-bottom: 54px; }
 .tr-amb { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
 .tr-amb .glow { opacity: .55; }
+/* --p runs -1 (below the fold) to 1 (passed above). Glows drift against the
+   scroll so the background is never quite still. */
+.tr-amb[data-parallax] .glow { transform: translate3d(0, calc(var(--p, 0) * -46px), 0); }
 
-/* Lighter card: a hairline and a whisper of fill, not a heavy panel. */
 .tr-card {
   position: relative;
   z-index: 1;
@@ -131,10 +133,10 @@ const TOUR_CSS = `
   grid-template-columns: 1fr 320px;
   gap: 52px;
   align-items: center;
-  padding: 40px 44px;
-  border-radius: 24px;
-  border: 1px solid rgba(255,255,255,.055);
-  background: rgba(255,255,255,.014);
+  padding: 44px 46px;
+  border-radius: 26px;
+  border: 1px solid rgba(255,255,255,.06);
+  background: rgba(255,255,255,.016);
   backdrop-filter: blur(2px);
 }
 .tr-card.flip { grid-template-columns: 320px 1fr; }
@@ -142,9 +144,6 @@ const TOUR_CSS = `
 .tr-card.flip .tr-device { order: 1; }
 
 .tr-device { display: flex; justify-content: center; }
-/* The frame's padding changes the inner aspect ratio, so the screen carries the
-   image's own ratio and the phone takes its height from that. Any mismatch here
-   makes object-fit crop the sides and silently eat the UI. */
 .tr-phone {
   position: relative;
   width: 100%;
@@ -152,27 +151,23 @@ const TOUR_CSS = `
   border-radius: 38px;
   padding: 9px;
   background: linear-gradient(160deg, #2A2621, #131110 60%);
-  box-shadow: 0 0 0 1px rgba(255,255,255,.09), 0 26px 56px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.13);
+  box-shadow: 0 0 0 1px rgba(255,255,255,.09), 0 30px 64px rgba(0,0,0,.58), inset 0 1px 0 rgba(255,255,255,.13);
+  /* Rises slightly faster than the page, and un-tilts as it settles. */
+  transform: translate3d(0, calc(var(--p, 0) * -26px), 0) rotate(calc(var(--p, 0) * -0.7deg));
+  will-change: transform;
 }
 .tr-phone::after {
   content: ""; position: absolute; top: 17px; left: 50%; transform: translateX(-50%);
   width: 72px; height: 6px; border-radius: 99px; background: rgba(0,0,0,.5); z-index: 2;
 }
-.tr-screen {
-  width: 100%;
-  aspect-ratio: 588 / 1200;
-  border-radius: 30px;
-  overflow: hidden;
-  background: #FAF7F1;
-}
+.tr-screen { width: 100%; aspect-ratio: 588 / 1200; border-radius: 30px; overflow: hidden; background: #FAF7F1; }
 .tr-screen img { display: block; width: 100%; height: 100%; object-fit: contain; }
 
-/* Prose blocks share the card's lightness. */
 .tr-band {
   position: relative; z-index: 1;
-  max-width: 1000px; margin: 0 auto; padding: 40px 44px;
-  border-radius: 24px; border: 1px solid rgba(255,255,255,.055);
-  background: rgba(255,255,255,.014);
+  max-width: 1000px; margin: 0 auto; padding: 44px 46px;
+  border-radius: 26px; border: 1px solid rgba(255,255,255,.06);
+  background: rgba(255,255,255,.016);
 }
 .tr-two { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
 .tr-ritual h3 { font-size: 19px; margin: 0 0 9px; }
@@ -188,15 +183,36 @@ const TOUR_CSS = `
 .tr-limit { padding: 15px 16px; border-radius: 13px; border: 1px solid rgba(255,255,255,.07); background: rgba(255,255,255,.018); }
 
 .tr-jump { display: flex; flex-wrap: wrap; gap: 9px; justify-content: center; }
-.tr-jump a { display: inline-flex; align-items: center; gap: 7px; padding: 8px 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,.11); background: rgba(255,255,255,.025); color: #B9B1A3; font-size: 13px; text-decoration: none; transition: border-color .15s ease, color .15s ease; }
-.tr-jump a:hover { color: #F7F3EA; border-color: rgba(255,255,255,.3); }
+.tr-jump a { display: inline-flex; align-items: center; gap: 7px; padding: 8px 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,.11); background: rgba(255,255,255,.025); color: #B9B1A3; font-size: 13px; text-decoration: none; transition: border-color .15s ease, color .15s ease, transform .15s ease; }
+.tr-jump a:hover { color: #F7F3EA; border-color: rgba(255,255,255,.3); transform: translateY(-1px); }
 
-[data-reveal] { opacity: 0; transform: translateY(30px) scale(.99); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); will-change: opacity, transform; }
+/* Entrance: the card arrives with a little depth, then flattens. */
+[data-reveal] {
+  opacity: 0;
+  transform: perspective(1200px) translateY(38px) rotateX(3.5deg) scale(.985);
+  transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1);
+  will-change: opacity, transform;
+}
 [data-reveal="in"] { opacity: 1; transform: none; }
-[data-reveal] .tr-device { opacity: 0; transform: translateY(22px); transition: opacity .75s cubic-bezier(.2,.7,.2,1) .12s, transform .75s cubic-bezier(.2,.7,.2,1) .12s; }
+
+/* Copy staggers in behind the card so the eye lands on the words in order. */
+[data-reveal] .tr-copy > * { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
+[data-reveal="in"] .tr-copy > * { opacity: 1; transform: none; }
+[data-reveal="in"] .tr-copy > *:nth-child(1) { transition-delay: .10s; }
+[data-reveal="in"] .tr-copy > *:nth-child(2) { transition-delay: .17s; }
+[data-reveal="in"] .tr-copy > *:nth-child(3) { transition-delay: .24s; }
+[data-reveal="in"] .tr-copy > *:nth-child(4) { transition-delay: .31s; }
+[data-reveal] .tr-copy li { opacity: 0; transform: translateY(10px); transition: opacity .5s ease, transform .5s cubic-bezier(.2,.7,.2,1); }
+[data-reveal="in"] .tr-copy li { opacity: 1; transform: none; }
+[data-reveal="in"] .tr-copy li:nth-child(1) { transition-delay: .36s; }
+[data-reveal="in"] .tr-copy li:nth-child(2) { transition-delay: .43s; }
+[data-reveal="in"] .tr-copy li:nth-child(3) { transition-delay: .50s; }
+
+[data-reveal] .tr-device { opacity: 0; transform: translateY(26px) scale(.97); transition: opacity .85s cubic-bezier(.2,.7,.2,1) .14s, transform .85s cubic-bezier(.2,.7,.2,1) .14s; }
 [data-reveal="in"] .tr-device { opacity: 1; transform: none; }
 
 @media (max-width: 980px) {
+  .tr-sec { padding-top: 34px; padding-bottom: 34px; }
   .tr-card, .tr-card.flip { grid-template-columns: 1fr; gap: 30px; padding: 34px 26px; }
   .tr-card.flip .tr-copy, .tr-card.flip .tr-device { order: 0; }
   .tr-phone { max-width: 288px; }
@@ -210,7 +226,8 @@ const TOUR_CSS = `
   .tr-card, .tr-card.flip, .tr-band { padding: 26px 20px; border-radius: 20px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  [data-reveal], [data-reveal] .tr-device { opacity: 1; transform: none; transition: none; }
+  [data-reveal], [data-reveal] .tr-device, [data-reveal] .tr-copy > *, [data-reveal] .tr-copy li { opacity: 1; transform: none; transition: none; }
+  .tr-phone, .tr-amb[data-parallax] .glow { transform: none !important; }
   .tr-amb .glow { animation: none !important; }
 }
 `;
@@ -224,7 +241,7 @@ function Ambient({ i, color }: { i: number; color: string }) {
   const right = i % 2 === 1;
   const tone = color === MINT ? "glow-sun" : color === LILAC ? "glow-ember" : "glow-orange";
   return (
-    <div className="tr-amb" aria-hidden="true">
+    <div className="tr-amb" data-parallax="" aria-hidden="true">
       <div
         className={`glow ${tone}`}
         style={{
@@ -331,7 +348,6 @@ export function Tour() {
             key={s.id}
             id={s.id}
             className="tr-anchor tr-sec px-6"
-            style={{ paddingTop: 30, paddingBottom: 30 }}
             aria-labelledby={`${s.id}-title`}
           >
             <Ambient i={i} color={s.color} />
@@ -363,7 +379,7 @@ export function Tour() {
               </div>
 
               <div className="tr-device">
-                <div className="tr-phone">
+                <div className="tr-phone" data-parallax="">
                   <div className="tr-screen">
                     <img
                       src={s.shot}
@@ -381,7 +397,7 @@ export function Tour() {
         ))}
 
         {/* Why coming back matters. Tied to the map, not to a badge. */}
-        <section className="tr-anchor tr-sec px-6" id="streak" style={{ paddingTop: 30, paddingBottom: 30 }}>
+        <section className="tr-anchor tr-sec px-6" id="streak">
           <Ambient i={5} color={MINT} />
           <div className="tr-band" data-reveal="">
             <p className="eyebrow" style={{ margin: "0 0 12px", color: MINT }}>
@@ -419,7 +435,7 @@ export function Tour() {
         </section>
 
         {/* Not another journal */}
-        <section className="tr-anchor tr-sec px-6" id="different" style={{ paddingTop: 30, paddingBottom: 30 }}>
+        <section className="tr-anchor tr-sec px-6" id="different">
           <Ambient i={6} color={LILAC} />
           <div className="tr-band" data-reveal="">
             <p className="eyebrow" style={{ margin: "0 0 12px", color: LILAC }}>
@@ -475,7 +491,7 @@ export function Tour() {
         </section>
 
         {/* Daily ritual */}
-        <section className="tr-anchor tr-sec px-6" id="ritual" style={{ paddingTop: 30, paddingBottom: 30 }}>
+        <section className="tr-anchor tr-sec px-6" id="ritual">
           <Ambient i={7} color={IRIS} />
           <div className="tr-band" data-reveal="">
             <p className="eyebrow" style={{ margin: "0 0 12px", color: IRIS }}>
@@ -506,7 +522,7 @@ export function Tour() {
         </section>
 
         {/* Depth and limits */}
-        <section className="tr-anchor tr-sec px-6" id="limits" style={{ paddingTop: 30, paddingBottom: 30 }}>
+        <section className="tr-anchor tr-sec px-6" id="limits">
           <Ambient i={8} color={MINT} />
           <div className="tr-band" data-reveal="">
             <p className="eyebrow" style={{ margin: "0 0 12px", color: MINT }}>

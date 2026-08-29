@@ -207,7 +207,7 @@ export function About() {
                 </p>
                 <p className="text-[17px] leading-[1.62]" style={{ margin: 0, color: "#F7F3EA" }}>
                   Build something you can talk to at any hour that turns what you said into a record
-                  you own, so the talking adds up to knowing yourself better.
+                  of how you actually felt, so the talking adds up to knowing yourself better.
                 </p>
               </div>
             </div>

@@ -128,7 +128,7 @@ const TOUR_CSS = `
   max-width: 1000px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 300px;
+  grid-template-columns: 1fr 320px;
   gap: 52px;
   align-items: center;
   padding: 40px 44px;
@@ -137,27 +137,35 @@ const TOUR_CSS = `
   background: rgba(255,255,255,.014);
   backdrop-filter: blur(2px);
 }
-.tr-card.flip { grid-template-columns: 300px 1fr; }
+.tr-card.flip { grid-template-columns: 320px 1fr; }
 .tr-card.flip .tr-copy { order: 2; }
 .tr-card.flip .tr-device { order: 1; }
 
 .tr-device { display: flex; justify-content: center; }
+/* The frame's padding changes the inner aspect ratio, so the screen carries the
+   image's own ratio and the phone takes its height from that. Any mismatch here
+   makes object-fit crop the sides and silently eat the UI. */
 .tr-phone {
   position: relative;
   width: 100%;
-  max-width: 244px;
-  aspect-ratio: 490 / 1060;
-  border-radius: 34px;
-  padding: 8px;
+  max-width: 300px;
+  border-radius: 38px;
+  padding: 9px;
   background: linear-gradient(160deg, #2A2621, #131110 60%);
   box-shadow: 0 0 0 1px rgba(255,255,255,.09), 0 26px 56px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.13);
 }
 .tr-phone::after {
-  content: ""; position: absolute; top: 16px; left: 50%; transform: translateX(-50%);
-  width: 68px; height: 6px; border-radius: 99px; background: rgba(0,0,0,.55); z-index: 2;
+  content: ""; position: absolute; top: 17px; left: 50%; transform: translateX(-50%);
+  width: 72px; height: 6px; border-radius: 99px; background: rgba(0,0,0,.5); z-index: 2;
 }
-.tr-screen { width: 100%; height: 100%; border-radius: 27px; overflow: hidden; background: #FAF7F1; }
-.tr-screen img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+.tr-screen {
+  width: 100%;
+  aspect-ratio: 588 / 1200;
+  border-radius: 30px;
+  overflow: hidden;
+  background: #FAF7F1;
+}
+.tr-screen img { display: block; width: 100%; height: 100%; object-fit: contain; }
 
 /* Prose blocks share the card's lightness. */
 .tr-band {
@@ -191,7 +199,7 @@ const TOUR_CSS = `
 @media (max-width: 980px) {
   .tr-card, .tr-card.flip { grid-template-columns: 1fr; gap: 30px; padding: 34px 26px; }
   .tr-card.flip .tr-copy, .tr-card.flip .tr-device { order: 0; }
-  .tr-phone { max-width: 224px; }
+  .tr-phone { max-width: 288px; }
   .tr-band { padding: 32px 26px; }
   .tr-two { grid-template-columns: 1fr; gap: 26px; }
   .tr-limits { grid-template-columns: 1fr; }
@@ -360,7 +368,7 @@ export function Tour() {
                     <img
                       src={s.shot}
                       alt={s.alt}
-                      width={554}
+                      width={588}
                       height={1200}
                       loading={i === 0 ? "eager" : "lazy"}
                       decoding="async"

@@ -7,10 +7,7 @@
  */
 import { Link } from "react-router";
 import { ArrowRight } from "lucide-react";
-
-const MINT = "#FFD23F";
-const IRIS = "#FF7A1A";
-const LILAC = "#F24E1E";
+import { BuddyBlob } from "./BuddyBlob";
 
 export interface SiteFooterProps {
   /** Headline above the call to action. */
@@ -61,14 +58,7 @@ export function SiteFooter({
               style={{ color: "inherit" }}
               aria-label="buddy.ai home"
             >
-              <span
-                className="block h-[22px] w-[22px]"
-                aria-hidden="true"
-                style={{
-                  borderRadius: "46% 54% 55% 45% / 53% 47% 53% 47%",
-                  background: `linear-gradient(160deg, ${MINT} 25%, ${IRIS} 60%, ${LILAC} 92%)`,
-                }}
-              />
+              <BuddyBlob size={22} glow={false} follow={false} aria-label="" />
               <span className="font-display text-[16px] font-bold">buddy.ai</span>
             </Link>
             <nav className="lp-footer-links flex flex-wrap gap-[22px] text-[13.5px]" aria-label="Footer">

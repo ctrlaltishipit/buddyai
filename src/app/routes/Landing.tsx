@@ -183,11 +183,8 @@ export function Landing() {
             ))}
           </div>
           <div className="flex items-center gap-3">
-            <Link to="/auth" className="btn btn-outline-dark btn-sm">
-              Sign in
-            </Link>
             <Link to="/signup" className="btn btn-grad btn-sm">
-              Get started
+              Get early access
             </Link>
           </div>
         </nav>
@@ -243,17 +240,16 @@ export function Landing() {
               Vent, think out loud, or just write the day down.
               <br />
               Buddy listens, helps you make sense of it, and keeps every word private to you.
+              <br />
+              <span className="text-mint">Create your buddy now and we will email you when app access opens.</span>
             </p>
             <div className="anim-fade-up mt-[30px] flex flex-wrap justify-center gap-[14px]" style={fadeUp(0.34)}>
               <Link to="/signup" className="btn btn-grad btn-lg">
-                Create your buddy <ArrowRight size={17} strokeWidth={2.4} aria-hidden="true" />
-              </Link>
-              <Link to="/auth" className="btn btn-outline-dark" style={{ padding: "16px 26px", fontSize: 15.5 }}>
-                Sign in
+                Create your buddy for early access <ArrowRight size={17} strokeWidth={2.4} aria-hidden="true" />
               </Link>
             </div>
             <p className="anim-fade-up text-dim" style={{ ...fadeUp(0.42), margin: "22px 0 0", fontSize: 13 }}>
-              2-minute setup&nbsp;&nbsp;·&nbsp;&nbsp;Private by design&nbsp;&nbsp;·&nbsp;&nbsp;Free forever plan
+              Takes a minute&nbsp;&nbsp;·&nbsp;&nbsp;Private by design&nbsp;&nbsp;·&nbsp;&nbsp;Free while we build
             </p>
           </div>
         </section>
@@ -450,14 +446,11 @@ export function Landing() {
               Ready when you are.
             </h2>
             <p className="relative text-[16.5px] leading-[1.6] text-fog" style={{ margin: "0 auto 32px", maxWidth: 460 }}>
-              Start with one sentence. That's enough to begin.
+              Create your buddy, sign up with Google, and we will email you the moment app access opens.
             </p>
             <div className="relative flex flex-wrap justify-center gap-[14px]">
               <Link to="/signup" className="btn btn-grad btn-lg">
-                Create your buddy
-              </Link>
-              <Link to="/auth" className="btn btn-outline-dark" style={{ padding: "16px 26px", fontSize: 15.5 }}>
-                I have an account
+                Create your buddy for app access
               </Link>
             </div>
           </div>

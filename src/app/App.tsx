@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes, useLocation } from "react-router";
-import type { ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
+import { trackPageView } from "./lib/analytics";
 import { BuddyBlob } from "./components/BuddyBlob";
 import { CrisisModal } from "./components/CrisisModal";
 import { useStore } from "./lib/store";
@@ -70,7 +71,16 @@ function ToastHost() {
   );
 }
 
+/** Sends one GA page view per route change (SPA navigations are invisible to gtag). */
+function usePageViews() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    trackPageView(pathname);
+  }, [pathname]);
+}
+
 export default function App() {
+  usePageViews();
   return (
     <>
       <Routes>

@@ -71,6 +71,7 @@ const SECTIONS: Section[] = [
       "Starters for when you don't know how to begin",
       "Questions that open things up instead of closing them down",
       "The conversation stays in your browser and is never saved",
+      "Every message is checked for crisis language before anything else",
     ],
     shot: "/shots/reflector.png",
     alt: "A conversation with the Reflector, which replies with a question rather than advice",
@@ -81,10 +82,10 @@ const SECTIONS: Section[] = [
     Icon: Waves,
     color: MINT,
     title: "See how you've been.",
-    body: "Every feeling you confirm becomes a thread. Over a few weeks the threads make a shape, and the shape shows you things you would not have noticed on your own.",
+    body: "Every feeling you confirm on an entry becomes a thread. Over a few weeks the threads make a shape, and the shape shows you things you would not have noticed on your own.",
     points: [
       "Each emotion drawn over a week, a month, or all of it",
-      "Which feeling was loudest, and what shifted",
+      "Which feeling was most present, and what shifted",
       "Quiet noticings you are free to take or leave",
     ],
     shot: "/shots/map.png",
@@ -160,6 +161,24 @@ const TOUR_CSS = `
 .tr-screen { width: 100%; height: 100%; border-radius: 33px; overflow: hidden; background: #FAF7F1; }
 .tr-screen img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
 
+.tr-band { max-width: 1080px; margin: 0 auto; padding: 54px 60px; border-radius: 28px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.022); }
+.tr-two { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; }
+.tr-ritual h3 { font-size: 20px; margin: 0 0 10px; }
+.tr-table-wrap { overflow-x: auto; border-radius: 16px; border: 1px solid rgba(255,255,255,.09); }
+.tr-table { border-collapse: collapse; width: 100%; min-width: 620px; font-size: 14.5px; }
+.tr-table th, .tr-table td { text-align: left; padding: 13px 16px; border-bottom: 1px solid rgba(255,255,255,.07); }
+.tr-table thead th { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: #7D766B; background: rgba(255,255,255,.03); }
+.tr-table tbody tr:last-child td { border-bottom: 0; }
+.tr-table td:first-child { color: #B9B1A3; }
+.tr-table .tr-us { color: #F7F3EA; font-weight: 600; background: rgba(255,122,26,.06); }
+.tr-table thead .tr-us { color: #FF7A1A; background: rgba(255,122,26,.09); }
+.tr-limits { display: grid; gap: 14px; }
+.tr-limit { padding: 16px 18px; border-radius: 14px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.02); }
+@media (max-width: 980px) {
+  .tr-band { padding: 40px 28px; }
+  .tr-two { grid-template-columns: 1fr; gap: 30px; }
+}
+@media (max-width: 720px) { .tr-band { padding: 32px 22px; border-radius: 22px; } }
 .tr-jump { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
 .tr-jump a { display: inline-flex; align-items: center; gap: 8px; padding: 9px 15px; border-radius: 999px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.03); color: #B9B1A3; font-size: 13.5px; text-decoration: none; transition: border-color .15s ease, color .15s ease; }
 .tr-jump a:hover { color: #F7F3EA; border-color: rgba(255,255,255,.3); }
@@ -312,6 +331,162 @@ export function Tour() {
             </div>
           </section>
         ))}
+
+        {/* Why coming back matters. Tied to the map, not to a badge. */}
+        <section className="tr-anchor px-6" id="streak" style={{ paddingTop: 26, paddingBottom: 26 }}>
+          <div className="tr-band" data-reveal="">
+            <p className="eyebrow" style={{ margin: "0 0 12px", color: MINT }}>
+              COMING BACK
+            </p>
+            <h2 className="h-display" style={{ margin: "0 0 16px", fontSize: "clamp(26px, 3.1vw, 36px)", lineHeight: 1.14, maxWidth: "20ch" }}>
+              A streak here is not a badge.
+            </h2>
+            <div className="tr-two" style={{ marginTop: 22 }}>
+              <div>
+                <p className="text-[16px] leading-[1.68] text-fog" style={{ margin: "0 0 14px" }}>
+                  The map can only show you what you gave it. Three entries in a month is a chart with
+                  three dots and nothing to say. Write four or five times a week and it can tell you that
+                  Sunday nights run anxious, or that the word you keep reaching for is not sad, it is
+                  tired.
+                </p>
+                <p className="text-[16px] leading-[1.68] text-fog" style={{ margin: 0 }}>
+                  You cannot see a pattern from inside a single bad day. That is the whole reason to come
+                  back. Not to keep a number alive.
+                </p>
+              </div>
+              <div>
+                <p className="text-[16px] leading-[1.68] text-fog" style={{ margin: "0 0 14px" }}>
+                  So the reward for showing up is not points. It is resolution. The more you write, the
+                  sharper the map gets and the more confident its noticings become.
+                </p>
+                <p className="text-[15px] leading-[1.65] text-dim" style={{ margin: 0 }}>
+                  Miss a day and nothing dies, nothing turns red, and buddy will not guilt you into
+                  opening it. Some weeks you are fine and do not need this. That is a good outcome, not a
+                  failure.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Not another journal */}
+        <section className="tr-anchor px-6" id="different" style={{ paddingTop: 26, paddingBottom: 26 }}>
+          <div className="tr-band" data-reveal="">
+            <p className="eyebrow" style={{ margin: "0 0 12px", color: LILAC }}>
+              WHAT MAKES IT DIFFERENT
+            </p>
+            <h2 className="h-display" style={{ margin: "0 0 14px", fontSize: "clamp(26px, 3.1vw, 36px)", lineHeight: 1.14 }}>
+              Not another journal.
+            </h2>
+            <p className="text-[16px] leading-[1.68] text-fog" style={{ margin: "0 0 26px", maxWidth: "62ch" }}>
+              A notes app holds your words. A paper journal holds them and asks nothing. A general AI
+              chat answers fast, forgets you tomorrow, and is happy to tell you what to do about your
+              marriage. buddy sits somewhere none of those do.
+            </p>
+            <div className="tr-table-wrap">
+              <table className="tr-table">
+                <thead>
+                  <tr>
+                    <th scope="col" />
+                    <th scope="col">notes app</th>
+                    <th scope="col">paper journal</th>
+                    <th scope="col">general AI chat</th>
+                    <th scope="col" className="tr-us">buddy</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    ["Writes back", "no", "no", "yes", "yes, by asking"],
+                    ["Remembers your weeks", "no", "if you reread", "not really", "as an emotion map"],
+                    ["Names what you felt", "no", "you do", "inconsistently", "suggests it, you confirm"],
+                    ["Shows patterns over time", "no", "no", "no", "most present, biggest shift"],
+                    ["Gives advice", "no", "no", "constantly", "no, by design"],
+                    ["Has a shape when you are blank", "no", "no", "you must prompt it", "guided formats"],
+                  ].map((row) => (
+                    <tr key={row[0]}>
+                      <th scope="row" style={{ color: "#B9B1A3", fontWeight: 500 }}>
+                        {row[0]}
+                      </th>
+                      <td>{row[1]}</td>
+                      <td>{row[2]}</td>
+                      <td>{row[3]}</td>
+                      <td className="tr-us">{row[4]}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="text-[16px] leading-[1.68] text-fog" style={{ margin: "24px 0 0", maxWidth: "62ch" }}>
+              A chatbot gives you an answer and moves on. A journal lets you rewrite the same bad night
+              fifty times and never notice. buddy shows you the fifty nights on one chart. That is the
+              difference between sitting in it and seeing it.
+            </p>
+          </div>
+        </section>
+
+        {/* Daily ritual */}
+        <section className="tr-anchor px-6" id="ritual" style={{ paddingTop: 26, paddingBottom: 26 }}>
+          <div className="tr-band" data-reveal="">
+            <p className="eyebrow" style={{ margin: "0 0 12px", color: IRIS }}>
+              A PLACE IN YOUR DAY
+            </p>
+            <h2 className="h-display" style={{ margin: "0 0 26px", fontSize: "clamp(26px, 3.1vw, 36px)", lineHeight: 1.14 }}>
+              Two minutes, twice a day.
+            </h2>
+            <div className="tr-two tr-ritual">
+              <div>
+                <h3 className="font-display" style={{ color: MINT }}>Start your day</h3>
+                <p className="text-[16px] leading-[1.68] text-fog" style={{ margin: 0 }}>
+                  Open buddy and see which way your week has been leaning. Take two minutes with a
+                  check-in, body, mind and heart, and name where you are actually starting from. It is a
+                  smaller thing than a plan, and it makes the rest of the day less of a surprise.
+                </p>
+              </div>
+              <div>
+                <h3 className="font-display" style={{ color: LILAC }}>End your night</h3>
+                <p className="text-[16px] leading-[1.68] text-fog" style={{ margin: 0 }}>
+                  Write it out, or just talk. Say what happened, or the one thing that will not leave you
+                  alone. buddy suggests what it heard you feeling, you fix it if it got it wrong, and that
+                  feeling joins the map. Then you put the phone down.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Depth and limits */}
+        <section className="tr-anchor px-6" id="limits" style={{ paddingTop: 26, paddingBottom: 26 }}>
+          <div className="tr-band" data-reveal="">
+            <p className="eyebrow" style={{ margin: "0 0 12px", color: MINT }}>
+              YOU SET THE DEPTH
+            </p>
+            <h2 className="h-display" style={{ margin: "0 0 16px", fontSize: "clamp(26px, 3.1vw, 36px)", lineHeight: 1.14, maxWidth: "22ch" }}>
+              As far as you want to go, and no further.
+            </h2>
+            <p className="text-[16px] leading-[1.68] text-fog" style={{ margin: "0 0 26px", maxWidth: "62ch" }}>
+              Some nights you want to write one line and close the app. Some nights you want to talk for
+              an hour. Both are fine. buddy will not push you to say more than you came to say, and it
+              will not tell you what your problem is, because a companion that hands out answers at
+              midnight is not actually helping you hear yourself.
+            </p>
+            <div className="tr-limits">
+              {[
+                ["It is not a therapist.", "buddy cannot diagnose you and will not try. For anything heavy or ongoing, a real professional is the right call, and buddy will say so."],
+                ["It stops if you are in danger.", "If something you write sounds like a crisis, buddy stops the conversation and shows you real helplines instead of carrying on."],
+                ["Your words stay yours.", "Entries are private to your account. Export everything or delete everything, whenever you want, in one click."],
+              ].map(([h, b]) => (
+                <div key={h} className="tr-limit">
+                  <p className="font-display" style={{ margin: "0 0 5px", fontSize: 16.5, fontWeight: 600 }}>
+                    {h}
+                  </p>
+                  <p className="text-[15px] leading-[1.6] text-fog" style={{ margin: 0 }}>
+                    {b}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
         {/* Bridge back to the promise */}
         <section className="px-6 pb-[64px]">

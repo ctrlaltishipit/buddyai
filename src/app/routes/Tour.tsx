@@ -39,8 +39,8 @@ const SECTIONS: Section[] = [
     body: "You open buddy and it picks up the thread. What you've written this week, how often you've come back, and the feeling running underneath it all.",
     points: [
       "A read on the week that names a leaning, not a verdict",
-      "Your streak, there to encourage and never to scold",
-      "One tap into writing or into a conversation",
+      "A one-tap check-in, so a hard day still reaches your map",
+      "How many of the last seven days you showed up, never a chain to break",
     ],
     shot: "/shots/home.png",
     alt: "The buddy home screen showing a weekly leaning, a six day streak and recent entries",

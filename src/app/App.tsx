@@ -13,6 +13,15 @@ import { Landing } from "./routes/Landing";
 import { Reflector } from "./routes/Reflector";
 import { Settings } from "./routes/Settings";
 import { SignupFlow } from "./routes/SignupFlow";
+import { EarlyAccess } from "./routes/EarlyAccess";
+import { Welcome } from "./routes/Welcome";
+
+/**
+ * The journal app is built but not released. While this is false the public
+ * site is an early-access waitlist and /app/* plus /auth redirect home.
+ * Flip VITE_APP_ENABLED=true to open the full product.
+ */
+const APP_ENABLED = import.meta.env.VITE_APP_ENABLED === "true";
 
 /** Full-screen splash while the session hydrates. */
 function Splash() {
@@ -95,25 +104,38 @@ export default function App() {
         <Route
           path="/auth"
           element={
-            <AuthGate>
-              <Auth />
-            </AuthGate>
+            APP_ENABLED ? (
+              <AuthGate>
+                <Auth />
+              </AuthGate>
+            ) : (
+              <Navigate to="/" replace />
+            )
           }
         />
         <Route
           path="/signup"
           element={
-            <RedirectIfOnboarded>
-              <SignupFlow />
-            </RedirectIfOnboarded>
+            APP_ENABLED ? (
+              <RedirectIfOnboarded>
+                <SignupFlow />
+              </RedirectIfOnboarded>
+            ) : (
+              <EarlyAccess />
+            )
           }
         />
+        <Route path="/welcome" element={<Welcome />} />
         <Route
           path="/app"
           element={
-            <RequireOnboarded>
-              <AppShell />
-            </RequireOnboarded>
+            APP_ENABLED ? (
+              <RequireOnboarded>
+                <AppShell />
+              </RequireOnboarded>
+            ) : (
+              <Navigate to="/" replace />
+            )
           }
         >
           <Route index element={<Navigate to="home" replace />} />

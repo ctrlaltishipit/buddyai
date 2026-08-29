@@ -1,0 +1,4 @@
+project_id = "buddy"
+
+[functions.join-waitlist]
+verify_jwt = true

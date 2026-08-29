@@ -273,10 +273,15 @@ export function About() {
                   Deekshitha Sreerala
                 </h2>
                 <p className="text-dim" style={{ margin: "0 0 16px", fontSize: 14.5, letterSpacing: ".02em" }}>
-                  Founder
+                  Founder · Product and AI
                 </p>
                 <p className="text-[16.5px] leading-[1.68] text-fog" style={{ margin: "0 0 14px" }}>
-                  buddy started from something small and stubborn: the moment you most want to talk is
+                  Deekshitha works across product management, marketing and go-to-market, with a
+                  systems thinking habit of pulling on a thread until the whole shape shows. Her line
+                  is turning "what ifs" into "what's next". buddy is one of those what ifs.
+                </p>
+                <p className="text-[16.5px] leading-[1.68] text-fog" style={{ margin: "0 0 14px" }}>
+                  It started from something small and stubborn: the moment you most want to talk is
                   usually the moment there is nobody to talk to. Not because people do not care, but
                   because it is late, or because you do not want to be the friend who keeps bringing
                   this up again.

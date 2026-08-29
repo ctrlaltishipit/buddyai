@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "buddy-web",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--", "--host"],
+      "port": 5173
+    },
+    {
+      "name": "buddy-api",
+      "runtimeExecutable": "backend/.venv/bin/uvicorn",
+      "runtimeArgs": ["app.main:app", "--reload", "--port", "8000", "--app-dir", "backend"],
+      "port": 8000
+    }
+  ]
+}

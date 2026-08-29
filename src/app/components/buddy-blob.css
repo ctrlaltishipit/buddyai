@@ -1,0 +1,92 @@
+/* BuddyBlob — the buddy.ai mascot.
+   A morphing, softly-lit gradient orb with two eyes. All dimensions are
+   relative to --s (the blob size) so it scales from 22px to 300px+. */
+
+.bb {
+  position: relative;
+  width: var(--s);
+  height: var(--s);
+  flex-shrink: 0;
+  animation: bb-sway calc(var(--dur) * 1.6) ease-in-out infinite;
+  will-change: transform;
+}
+.bb[data-float="true"] { animation: bb-sway calc(var(--dur) * 1.6) ease-in-out infinite, float 6s ease-in-out infinite; }
+
+/* Colored ground glow beneath the body */
+.bb-glow {
+  position: absolute;
+  inset: 12% 8% -4% 8%;
+  border-radius: 50%;
+  background: radial-gradient(60% 55% at 50% 60%, var(--c2), transparent 70%);
+  filter: blur(calc(var(--s) * 0.12));
+  opacity: 0.55;
+  transform: translateY(calc(var(--s) * 0.06));
+  pointer-events: none;
+}
+
+/* The body: gradient + inset lighting + morphing silhouette */
+.bb-body {
+  position: absolute;
+  inset: 0;
+  border-radius: 46% 54% 55% 45% / 53% 47% 53% 47%;
+  background:
+    radial-gradient(95% 95% at 26% 18%, var(--c1) 0%, transparent 62%),
+    radial-gradient(90% 90% at 72% 88%, var(--c3) 0%, transparent 60%),
+    linear-gradient(160deg, var(--c1) 25%, var(--c2) 60%, var(--c3) 92%);
+  box-shadow:
+    inset calc(var(--s) * 0.05) calc(var(--s) * 0.06) calc(var(--s) * 0.14) rgba(255, 255, 255, 0.45),
+    inset calc(var(--s) * -0.06) calc(var(--s) * -0.08) calc(var(--s) * 0.16) rgba(0, 0, 0, 0.3),
+    0 calc(var(--s) * 0.08) calc(var(--s) * 0.22) rgba(10,9,8, 0.25);
+  animation: morph var(--dur) ease-in-out infinite;
+  overflow: hidden;
+}
+
+/* Specular sheen (top-left) */
+.bb-sheen {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(58% 42% at 30% 20%, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 70%);
+  pointer-events: none;
+}
+
+/* Rim light (bottom-right) — gives the "3D" roundness */
+.bb-rim {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(70% 60% at 76% 84%, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0) 60%);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+/* Eyes: two dark capsules, centered; they blink and can follow the pointer */
+.bb-eyes {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--s) * 0.11);
+  transform: translate(0, calc(var(--s) * -0.02));
+  transition: transform 0.35s var(--ease-soft, cubic-bezier(0.2, 0.7, 0.2, 1));
+  pointer-events: none;
+}
+.bb-eye {
+  width: calc(var(--s) * 0.058);
+  height: calc(var(--s) * 0.092);
+  min-width: 2px;
+  min-height: 3px;
+  border-radius: calc(var(--s) * 0.05);
+  background: rgba(20,12,6, 0.82);
+  transform-origin: center;
+  animation: blink 4.6s ease-in-out infinite;
+  animation-delay: var(--blink-delay, 0s);
+}
+
+@keyframes bb-sway {
+  0%, 100% { transform: rotate(-1.5deg); }
+  50% { transform: rotate(1.5deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bb, .bb-body, .bb-eye { animation: none !important; }
+}

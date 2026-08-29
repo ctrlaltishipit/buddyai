@@ -1,0 +1,625 @@
+/* =========================================================
+   BUDDY.AI DESIGN SYSTEM v2 · "Someone to talk to, day or night"
+   Source of truth: web/design/buddy-redesign.reference.html
+
+   Two surfaces:
+     • DARK  — marketing (Landing), Auth, Signup wizard.  bg #0A0908
+     • LIGHT — the signed-in app (Home/Journal/Map/Reflector/Settings). bg #FAF7F1
+
+   Type: Bricolage Grotesque (display) + Plus Jakarta Sans (body/UI).
+   Palette v2.1 (2026-08-28): BLACK / YELLOW / ORANGE.
+   Brand gradient: sun #FFD23F → orange #FF7A1A → ember #F24E1E on warm black #0A0908.
+   ========================================================= */
+
+@theme {
+  /* --- Fonts --- */
+  --font-display: "Bricolage Grotesque", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  /* --- Brand gradient stops (yellow → orange → deep orange; black is the ground) --- */
+  --color-sun: #FFD23F;
+  --color-amber: #FFB020;
+  --color-orange: #FF7A1A;
+  --color-ember: #F24E1E;
+  --color-burnt: #C2410C;
+  --color-coal: #1C1410;
+
+  /* --- Dark surface (landing / auth / signup) --- */
+  --color-night: #0A0908;
+  --color-night-2: #131110;
+  --color-night-3: #16130F;
+  --color-snow: #F7F3EA;
+  --color-fog: #B9B1A3;
+  --color-dim: #7D766B;
+  --color-ink-on-grad: #1A1206;
+
+  /* --- Light surface (signed-in app) --- */
+  --color-app-bg: #FAF7F1;
+  --color-app-card: #FFFFFF;
+  --color-app-ink: #141210;
+  --color-app-text: #3D3730;
+  --color-app-sub: #6B645A;
+  --color-app-faint: #A39C90;
+  --color-app-line: #ECE6DC;
+  --color-app-line-2: #F1ECE4;
+  --color-app-hover: #F6F1E9;
+  --color-acc: #E8590C;        /* orange — fills, tints, active states */
+  --color-acc-ink: #B8420A;    /* deep orange — text/links on light (AA contrast) */
+  --color-acc2: #FFD23F;       /* yellow — second accent */
+  --color-gold-ink: #B07A12;   /* ✓ marks, reflector tile icon */
+
+  /* --- Emotion palette (used ONLY for mood pills, chart threads, entry rails) --- */
+  --color-mood-joy: #E8B23A;
+  --color-mood-gratitude: #9CB071;
+  --color-mood-love: #D58E8E;
+  --color-mood-hope: #C8A66B;
+  --color-mood-sadness: #7C8EA8;
+  --color-mood-anxiety: #A395C2;
+  --color-mood-frustration: #C97A5D;
+  --color-mood-tiredness: #8A8F9C;
+  --color-mood-shame: #9A7E8C;
+  --color-mood-neutral: #B8B0A2;
+
+  /* --- Crisis (never elsewhere) --- */
+  --color-care: #B85C5C;
+  --color-care-soft: #F4E4E4;
+
+  /* --- Motion --- */
+  --ease-soft: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* =========================================================
+   Base
+   ========================================================= */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: var(--color-night);
+  color: var(--color-snow);
+}
+
+#root { min-height: 100vh; min-height: 100dvh; }
+
+button { font-family: inherit; }
+input, textarea, select { font-family: inherit; }
+textarea::placeholder, input::placeholder { color: var(--color-dim); }
+
+/* Surface scopes — wrap a screen in one of these. */
+.surface-dark {
+  background: var(--color-night);
+  color: var(--color-snow);
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+.surface-dark ::selection { background: rgba(255,122,26, 0.35); color: #fff; }
+
+.surface-light {
+  background: var(--color-app-bg);
+  color: var(--color-app-ink);
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+.surface-light ::selection { background: rgba(232,89,12, 0.2); color: var(--color-app-ink); }
+.surface-light textarea::placeholder, .surface-light input::placeholder { color: var(--color-app-faint); }
+
+/* Focus ring — visible but on-brand */
+:focus-visible { outline: 2px solid var(--color-orange); outline-offset: 2px; border-radius: 6px; }
+.surface-light :focus-visible { outline-color: var(--color-acc); }
+
+/* Scrollbar — quiet */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(160, 150, 130, 0.35); border-radius: 999px; }
+
+/* =========================================================
+   Type helpers
+   ========================================================= */
+
+.font-display { font-family: var(--font-display); }
+
+.h-display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+  margin: 0;
+}
+
+.eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.text-gradient {
+  background: linear-gradient(95deg, #FFD23F 5%, #FFB020 35%, #FF7A1A 65%, #F24E1E 95%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.text-balance { text-wrap: balance; }
+.text-pretty { text-wrap: pretty; }
+
+/* =========================================================
+   Buttons
+   ========================================================= */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, filter 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  min-height: 44px;
+}
+.btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none !important; }
+
+/* Brand gradient pill (dark surfaces) */
+.btn-grad {
+  padding: 14px 26px;
+  font-size: 15px;
+  color: var(--color-ink-on-grad);
+  background: linear-gradient(100deg, #FFD23F, #FF7A1A 55%, #F24E1E);
+  box-shadow: 0 8px 26px rgba(255,122,26, 0.35);
+}
+.btn-grad:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 12px 34px rgba(255,122,26, 0.45); }
+.btn-grad.btn-lg { padding: 16px 30px; font-size: 16px; box-shadow: 0 10px 34px rgba(255,122,26, 0.4); }
+.btn-grad.btn-lg:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 16px 44px rgba(255,122,26, 0.55); }
+.btn-grad.btn-sm { padding: 10px 20px; font-size: 14px; min-height: 40px; box-shadow: 0 6px 22px rgba(255,122,26, 0.35); }
+.btn-grad.btn-block { width: 100%; height: 54px; font-size: 15.5px; }
+
+/* Outline pill on dark */
+.btn-outline-dark {
+  padding: 14px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-snow);
+  background: transparent;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+}
+.btn-outline-dark:hover:not(:disabled) { background: rgba(255, 255, 255, 0.07); }
+.btn-outline-dark.btn-sm { padding: 10px 18px; font-size: 14px; min-height: 40px; }
+/* Phones: small pills still need a 44px tap target. */
+@media (max-width: 767px) {
+  .btn-grad.btn-sm, .btn-outline-dark.btn-sm { min-height: 44px; }
+}
+
+/* Ghost text button on dark (e.g. "Back") */
+.btn-ghost-dark {
+  background: none;
+  border: none;
+  color: var(--color-fog);
+  font: 500 14px var(--font-sans);
+  cursor: pointer;
+  padding: 8px 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+}
+.btn-ghost-dark:hover { color: var(--color-snow); }
+
+/* Light-app primary — black pill (the "black" of black/yellow/orange); orange is reserved for accents */
+.btn-acc {
+  padding: 12px 28px;
+  font-size: 14.5px;
+  color: #fff;
+  background: var(--color-app-ink);
+  box-shadow: 0 6px 18px rgba(20,18,16, 0.25);
+}
+.btn-acc:hover:not(:disabled) { transform: translateY(-1px); background: #2A2420; }
+
+/* Light-app secondary */
+.btn-soft {
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-app-ink);
+  background: #fff;
+  border: 1px solid var(--color-app-line);
+  min-height: 40px;
+}
+.btn-soft:hover:not(:disabled) { border-color: var(--color-app-faint); }
+.btn-soft.danger { color: var(--color-care); }
+.btn-soft.danger:hover:not(:disabled) { border-color: var(--color-care); background: var(--color-care-soft); }
+
+/* Text link button (light app) */
+.btn-link {
+  border: none;
+  background: none;
+  font: 600 13.5px var(--font-sans);
+  color: var(--color-acc-ink);
+  cursor: pointer;
+  padding: 4px 0;
+}
+.btn-link:hover { text-decoration: underline; }
+
+/* =========================================================
+   Cards, panels, pills
+   ========================================================= */
+
+.card-dark {
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 22px;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.card-dark.hoverable:hover { transform: translateY(-4px); }
+
+.card-light {
+  background: var(--color-app-card);
+  border: 1px solid var(--color-app-line);
+  border-radius: 18px;
+}
+.card-light.hoverable { cursor: pointer; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+.card-light.hoverable:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(20,18,16, 0.07); }
+
+/* Gradient-border panel on dark: background trick */
+.panel-grad {
+  background:
+    linear-gradient(var(--color-night-2), var(--color-night-2)) padding-box,
+    linear-gradient(120deg, rgba(255,210,63, 0.5), rgba(255,122,26, 0.4), rgba(242,78,30, 0.5)) border-box;
+  border: 1px solid transparent;
+  border-radius: 28px;
+}
+.panel-grad.strong {
+  background:
+    linear-gradient(var(--color-night-2), var(--color-night-2)) padding-box,
+    linear-gradient(120deg, #FFD23F, #FF7A1A, #F24E1E) border-box;
+  border-width: 1.5px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 999px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.pill-dark {
+  font-size: 13px;
+  padding: 7px 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  color: var(--color-snow);
+}
+.dot { width: 9px; height: 9px; border-radius: 999px; display: inline-block; flex-shrink: 0; }
+
+/* Segmented control (light app) */
+.seg {
+  display: inline-flex;
+  gap: 6px;
+  background: #fff;
+  border: 1px solid var(--color-app-line);
+  border-radius: 999px;
+  padding: 4px;
+}
+.seg > button {
+  padding: 7px 16px;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  color: var(--color-app-sub);
+  font: 600 13px var(--font-sans);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  min-height: 34px;
+}
+.seg > button[data-active="true"] { background: var(--color-app-ink); color: #fff; }
+
+/* Choice chips (light app: templates, region, tone) */
+.chip-light {
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: none;
+  background: rgba(20,18,16, 0.05);
+  color: var(--color-app-sub);
+  font: 600 13px var(--font-sans);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  min-height: 36px;
+}
+.chip-light[data-active="true"] { background: var(--color-app-ink); color: #fff; }
+
+/* Toggle switch (light app) */
+.switch {
+  flex-shrink: 0;
+  width: 44px;
+  height: 25px;
+  border-radius: 999px;
+  border: none;
+  background: #E6DFD4;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  padding: 0;
+}
+.switch::after {
+  content: "";
+  position: absolute;
+  top: 2.5px;
+  left: 2.5px;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: left 0.2s ease;
+}
+.switch[aria-checked="true"] { background: var(--color-acc); }
+.switch[aria-checked="true"]::after { left: 21.5px; }
+
+/* =========================================================
+   Form fields
+   ========================================================= */
+
+/* Dark field: wrapper holds an icon + a transparent input */
+.field-dark {
+  height: 52px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 0 15px;
+  transition: box-shadow 0.15s ease;
+}
+.field-dark:focus-within { box-shadow: inset 0 0 0 1.5px var(--color-sun); }
+.field-dark.invalid { box-shadow: inset 0 0 0 1.5px var(--color-care); }
+.field-dark > svg { color: var(--color-dim); flex-shrink: 0; }
+.field-dark:focus-within > svg { color: var(--color-sun); }
+.field-dark > input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font: 500 15px var(--font-sans);
+  color: var(--color-snow);
+  min-width: 0;
+}
+.field-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-fog);
+  margin-bottom: 8px;
+  display: block;
+}
+
+/* OTP digit boxes */
+.otp-box {
+  width: 52px;
+  height: 60px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--color-snow);
+}
+.otp-box.filled { background: rgba(255,122,26, 0.14); box-shadow: inset 0 0 0 1px rgba(255,122,26, 0.4); }
+.otp-box.active { box-shadow: inset 0 0 0 1.5px var(--color-sun); }
+
+/* Light textarea wrapper */
+.editor-light {
+  background: #fff;
+  border: 1.5px solid var(--color-app-line);
+  border-radius: 18px;
+  padding: 4px;
+  transition: border-color 0.2s ease;
+}
+.editor-light:focus-within { border-color: var(--color-acc); }
+.editor-light > textarea {
+  width: 100%;
+  border: none;
+  outline: none;
+  resize: vertical;
+  background: transparent;
+  padding: 16px 18px;
+  font: 400 15.5px/1.65 var(--font-sans);
+  color: var(--color-app-ink);
+  min-height: 240px;
+}
+
+/* Inline error / helper text */
+.form-error { color: #FF8A8A; font-size: 13px; margin-top: 8px; }
+.surface-light .form-error { color: var(--color-care); }
+
+/* =========================================================
+   Ambient glows (dark surfaces)
+   ========================================================= */
+
+.glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  pointer-events: none;
+}
+.glow-sun { background: radial-gradient(circle, rgba(255,210,63, 0.18), transparent 65%); }
+.glow-ember { background: radial-gradient(circle, rgba(242,78,30, 0.16), transparent 65%); }
+.glow-orange { background: radial-gradient(circle, rgba(255,122,26, 0.14), transparent 65%); }
+
+/* =========================================================
+   Toast
+   ========================================================= */
+
+.toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-app-ink);
+  color: #fff;
+  padding: 12px 22px;
+  border-radius: 999px;
+  font: 600 14px var(--font-sans);
+  box-shadow: 0 12px 34px rgba(20,18,16, 0.3);
+  animation: fade-up 0.3s ease both;
+  z-index: 60;
+  max-width: calc(100vw - 32px);
+}
+
+/* =========================================================
+   Keyframes (names match the reference: auFadeUp → fade-up, etc.)
+   ========================================================= */
+
+@keyframes fade-up { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes drift-1 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(60px, -40px) scale(1.15); } }
+@keyframes drift-2 { 0%, 100% { transform: translate(0, 0) scale(1.1); } 50% { transform: translate(-70px, 50px) scale(0.95); } }
+@keyframes morph {
+  0%, 100% { border-radius: 46% 54% 55% 45% / 53% 47% 53% 47%; }
+  33% { border-radius: 58% 42% 41% 59% / 45% 58% 42% 55%; }
+  66% { border-radius: 41% 59% 56% 44% / 57% 43% 57% 43%; }
+}
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+@keyframes dot-bounce { 0%, 60%, 100% { transform: translateY(0); opacity: 0.5; } 30% { transform: translateY(-4px); opacity: 1; } }
+@keyframes spark { 0%, 100% { opacity: 0.35; transform: scale(0.7); } 50% { opacity: 1; transform: scale(1); } }
+@keyframes blink { 0%, 92%, 100% { transform: scaleY(1); } 96% { transform: scaleY(0.08); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.anim-fade-up { animation: fade-up 0.8s var(--ease-soft) both; }
+.anim-morph { animation: morph 9s ease-in-out infinite; }
+.anim-float { animation: float 6s ease-in-out infinite; }
+.anim-spark { animation: spark 2.4s ease-in-out infinite; }
+
+/* Tiny inline spinner for buttons */
+.spinner {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+/* =========================================================
+   Layout helpers
+   ========================================================= */
+
+.container-lg { max-width: 1120px; margin: 0 auto; }
+.container-md { max-width: 960px; margin: 0 auto; }
+.container-sm { max-width: 760px; margin: 0 auto; }
+
+/* Auth / signup split screen: form left, blob panel right. Panel hides on narrow screens. */
+.split-screen {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+.split-panel { padding: 0; display: flex; }
+@media (max-width: 900px) {
+  .split-screen { grid-template-columns: 1fr; }
+  .split-panel { display: none; }
+}
+
+/* App shell: 264px sidebar + content; collapses to a bottom tab bar on small screens. */
+.app-shell {
+  display: grid;
+  grid-template-columns: 264px 1fr;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+.app-sidebar {
+  background: #fff;
+  border-right: 1px solid var(--color-app-line);
+  padding: 26px 18px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100dvh;
+}
+.app-tabbar { display: none; }
+.app-content { min-width: 0; }
+@media (max-width: 860px) {
+  .app-shell { grid-template-columns: 1fr; }
+  .app-sidebar { display: none; }
+  .app-content { padding-bottom: 84px; }
+  .app-tabbar {
+    display: flex;
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(14px);
+    border-top: 1px solid var(--color-app-line);
+    padding: 8px 6px calc(8px + env(safe-area-inset-bottom));
+    justify-content: space-around;
+    z-index: 40;
+  }
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 12px;
+  border-radius: 12px;
+  border: none;
+  background: transparent;
+  color: var(--color-app-sub);
+  font: 500 14.5px var(--font-sans);
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s ease, color 0.15s ease;
+  text-decoration: none;
+  min-height: 44px;
+}
+.nav-item:hover { background: var(--color-app-hover); }
+.nav-item[data-active="true"] { background: rgba(232,89,12, 0.11); color: var(--color-acc-ink); font-weight: 700; }
+
+/* Responsive grids used across the app */
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 720px) {
+  .grid-3, .grid-2 { grid-template-columns: 1fr; }
+}
+
+/* Page padding for light app screens */
+.page { padding: 44px 40px 60px; }
+@media (max-width: 720px) { .page { padding: 28px 18px 48px; } }
+
+/* =========================================================
+   Reduced motion
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

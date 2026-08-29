@@ -1,0 +1,21 @@
+# Secrets. Never commit these.
+.env
+.env.*
+!.env.example
+backend/.env
+backend/.env.*
+
+# Local database + backups
+backend/*.db
+backend/*.db-shm
+backend/*.db-wal
+
+# Dependencies / build output
+node_modules/
+dist/
+backend/.venv/
+backend/.pytest_cache/
+__pycache__/
+*.pyc
+
+.DS_Store

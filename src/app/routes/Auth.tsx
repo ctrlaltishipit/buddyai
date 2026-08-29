@@ -143,7 +143,7 @@ export function Auth() {
 
   const privacyFooter = (
     <p className="m-0 text-center text-[12px] text-dim" style={{ marginTop: 34, lineHeight: 1.6 }}>
-      Buddy stores your email, a password hash, and the entries you choose to save.
+      buddy stores your email, a password hash, and the entries you choose to save.
       <br />
       Nobody but you can read them.
     </p>
@@ -155,7 +155,7 @@ export function Auth() {
         Welcome back.
       </h1>
       <p className="m-0 text-[15.5px] text-fog" style={{ marginBottom: 32 }}>
-        Buddy's been here, waiting.
+        buddy's been here, waiting.
       </p>
 
       <form onSubmit={onLogin} noValidate aria-busy={pending} className="flex flex-col gap-4">

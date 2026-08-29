@@ -204,7 +204,7 @@ function Noticings({ data }: { data: InsightsMap }) {
     <div className="card-light" style={{ padding: 22 }}>
       <h2 style={{ ...cardTitle, margin: "0 0 4px" }}>Noticings</h2>
       <div style={{ fontSize: 11.5, color: FAINT, marginBottom: 12 }}>
-        Patterns Buddy spotted. Take or leave them.
+        Patterns buddy spotted. Take or leave them.
       </div>
       {items.length === 0 ? (
         <p style={{ margin: 0, padding: "9px 0", fontSize: 13.5, lineHeight: 1.6, color: TEXT }}>

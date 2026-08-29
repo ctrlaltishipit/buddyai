@@ -65,7 +65,7 @@ export function CrisisModal() {
         </div>
 
         <p className="mt-4 text-[15px] leading-relaxed" style={{ color: "#3D3730" }}>
-          What you wrote sounds really hard. Buddy isn't a therapist or an emergency service, but these people are
+          What you wrote sounds really hard. buddy isn't a therapist or an emergency service, but these people are
           trained for exactly this moment, and they'll pick up.
         </p>
 

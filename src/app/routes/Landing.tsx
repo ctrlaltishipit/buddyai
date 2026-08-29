@@ -32,7 +32,7 @@ const WHY = [
     bg: "rgba(255,210,63,.12)",
     tint: "rgba(255,210,63,.4)",
     title: "There when there's no one else.",
-    body: "Some days you need to say it out loud and nobody is free. Buddy is around at 3am, on a flat Monday, or right after good news lands.",
+    body: "Some days you need to say it out loud and nobody is free. buddy is around at 3am, on a flat Monday, or right after good news lands.",
   },
   {
     Icon: Lock,
@@ -54,7 +54,7 @@ const WHY = [
 
 const HOW = [
   { n: "01", color: MINT, title: "Say what's going on", body: "Type it or say it. A whole story or half a sentence. However it comes out is fine." },
-  { n: "02", color: IRIS, title: "Buddy listens", body: "It picks up what you're feeling underneath and asks you something back, so you can keep going." },
+  { n: "02", color: IRIS, title: "buddy listens", body: "It picks up what you're feeling underneath and asks you something back, so you can keep going." },
   { n: "03", color: LILAC, title: "Watch it add up", body: "Each entry adds a thread to your map. Look back any time to see how things have shifted." },
 ] as const;
 
@@ -79,7 +79,7 @@ const COMPANION_STYLE: Record<CompanionId, { speed: number; tint: string }> = {
 };
 
 const NAV_LINKS = [
-  { href: "#why", label: "Why Buddy" },
+  { href: "#why", label: "Why buddy" },
   { href: "#how", label: "How it works" },
   { href: "#privacy", label: "Privacy" },
 ] as const;
@@ -220,7 +220,7 @@ export function Landing() {
 
           <div className="relative mx-auto max-w-[900px]">
             <div className="anim-fade-up flex justify-center" style={fadeUp(0)}>
-              <BuddyBlob size={small ? 220 : 300} float aria-label="Buddy, your companion" />
+              <BuddyBlob size={small ? 220 : 300} float aria-label="buddy, your companion" />
             </div>
             <p
               className="eyebrow anim-fade-up text-mint"
@@ -248,7 +248,7 @@ export function Landing() {
             >
               Vent, think out loud, or just write the day down.
               <br />
-              Buddy listens, helps you make sense of it, and keeps every word private to you.
+              buddy listens, helps you make sense of it, and keeps every word private to you.
               <br />
               <span className="text-mint">Create your buddy now and we will email you when app access opens.</span>
             </p>
@@ -263,8 +263,8 @@ export function Landing() {
           </div>
         </section>
 
-        {/* ---------- Why Buddy ---------- */}
-        <section id="why" className="lp-anchor px-6 pb-[56px] pt-1" aria-label="Why Buddy">
+        {/* ---------- Why buddy ---------- */}
+        <section id="why" className="lp-anchor px-6 pb-[56px] pt-1" aria-label="Why buddy">
           <div className="container-lg grid-3" style={{ gap: 22 }}>
             {WHY.map(({ Icon, color, bg, tint, title, body }) => (
               <article
@@ -347,7 +347,7 @@ export function Landing() {
                 See the shape of your week.
               </h2>
               <p className="text-pretty text-[16px] leading-[1.65] text-fog" style={{ margin: "0 0 22px" }}>
-                Joy climbing since Tuesday. Anxiety easing after the demo. Buddy turns the feelings you confirm into
+                Joy climbing since Tuesday. Anxiety easing after the demo. buddy turns the feelings you confirm into
                 threads you can follow, week by week.
               </p>
               <div className="flex flex-wrap gap-2" role="list" aria-label="Chart legend">

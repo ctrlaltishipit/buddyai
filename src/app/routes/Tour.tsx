@@ -35,14 +35,14 @@ const SECTIONS: Section[] = [
     Icon: House,
     color: MINT,
     title: "It knows where you left off.",
-    body: "You open Buddy and it picks up the thread. What you've written this week, how often you've come back, and the feeling running underneath it all.",
+    body: "You open buddy and it picks up the thread. What you've written this week, how often you've come back, and the feeling running underneath it all.",
     points: [
       "A read on the week that names a leaning, not a verdict",
       "Your streak, there to encourage and never to scold",
       "One tap into writing or into a conversation",
     ],
     shot: "/shots/home.png",
-    alt: "The Buddy home screen showing a weekly leaning, a six day streak and recent entries",
+    alt: "The buddy home screen showing a weekly leaning, a six day streak and recent entries",
   },
   {
     id: "journal",
@@ -54,10 +54,10 @@ const SECTIONS: Section[] = [
     points: [
       "Freeform when you just need to get it out",
       "Guided formats for gratitude, check-ins and untangling a thought",
-      "Buddy suggests what it heard; you confirm or correct it",
+      "buddy suggests what it heard; you confirm or correct it",
     ],
     shot: "/shots/journal.png",
-    alt: "The Buddy journal screen with writing formats and earlier entries tagged with feelings",
+    alt: "The buddy journal screen with writing formats and earlier entries tagged with feelings",
   },
   {
     id: "reflector",
@@ -102,7 +102,7 @@ const SECTIONS: Section[] = [
       "Export everything or delete everything in one click",
     ],
     shot: "/shots/settings.png",
-    alt: "The Buddy settings screen showing companion, reminders, privacy and account controls",
+    alt: "The buddy settings screen showing companion, reminders, privacy and account controls",
   },
 ];
 
@@ -162,7 +162,7 @@ export function Tour() {
           <Logo tone="dark" to="/" />
           <div className="tr-links">
             <Link to="/">Home</Link>
-            <Link to="/#why">Why Buddy</Link>
+            <Link to="/#why">Why buddy</Link>
             <Link to="/#privacy">Privacy</Link>
           </div>
           <Link to="/signup" className="btn btn-grad btn-sm">

@@ -115,7 +115,7 @@ export function BuddyBlob({
       style={vars}
       data-float={float ? "true" : "false"}
       // An empty label means "decorative": hide it instead of announcing an unnamed image.
-      {...(ariaLabel === "" ? { "aria-hidden": true } : { role: "img", "aria-label": ariaLabel ?? "Buddy" })}
+      {...(ariaLabel === "" ? { "aria-hidden": true } : { role: "img", "aria-label": ariaLabel ?? "buddy" })}
     >
       {showGlow && <div className="bb-glow" />}
       <div className="bb-body">

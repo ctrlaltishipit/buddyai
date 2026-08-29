@@ -1,7 +1,7 @@
 {
   "name": "buddy.ai · Someone to talk to, day or night",
-  "short_name": "Buddy",
-  "description": "A companion and a journal in one. Vent, think out loud, or write the day down. Buddy listens, and every word stays private to your account.",
+  "short_name": "buddy",
+  "description": "A companion and a journal in one. Vent, think out loud, or write the day down. buddy listens, and every word stays private to your account.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0A0908",

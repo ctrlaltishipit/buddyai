@@ -7,7 +7,7 @@
  * `create` is the pre-account step. Every later step is persisted as
  * settings.onboarding_step (via store.updateSettings) so a user who leaves
  * resumes exactly where they stopped. onboarding_complete is flipped only on
- * the final "Enter Buddy" click — deliberately, so the done screen is seen.
+ * the final "Enter buddy" click — deliberately, so the done screen is seen.
  */
 import {
   useEffect,
@@ -595,7 +595,7 @@ function NameStep({ initial, onDone }: { initial: string; onDone: () => void }) 
     e.preventDefault();
     const v = name.trim();
     if (!v) {
-      setError("Tell Buddy what to call you.");
+      setError("Tell buddy what to call you.");
       return;
     }
     if (v.length > MAX_NAME) {
@@ -607,7 +607,7 @@ function NameStep({ initial, onDone }: { initial: string; onDone: () => void }) 
 
   return (
     <form onSubmit={onSubmit} noValidate>
-      <Heading>What should Buddy call you?</Heading>
+      <Heading>What should buddy call you?</Heading>
       <Sub mb={30}>This is how your companion greets you each day.</Sub>
       <FieldDark
         emphasized
@@ -663,9 +663,9 @@ function CompanionStep({
 
   return (
     <>
-      <Heading>Choose your Buddy.</Heading>
+      <Heading>Choose your buddy.</Heading>
       <Sub mb={26}>Each companion has its own personality. Swap anytime.</Sub>
-      <div role="radiogroup" aria-label="Choose your Buddy" className="flex flex-col" style={{ gap: 13 }}>
+      <div role="radiogroup" aria-label="Choose your buddy" className="flex flex-col" style={{ gap: 13 }}>
         {COMPANIONS.map((c, i) => {
           const sel = c.id === selected;
           return (
@@ -753,7 +753,7 @@ function GoalsStep({ initial, onDone }: { initial: string[]; onDone: () => void 
   return (
     <>
       <Heading>What's on your mind lately?</Heading>
-      <Sub mb={28}>Pick a few. Buddy tailors your daily prompts around them.</Sub>
+      <Sub mb={28}>Pick a few. buddy tailors your daily prompts around them.</Sub>
       <div className="flex flex-wrap" style={{ gap: 11 }}>
         {TOPICS.map((t) => {
           const sel = topics.includes(t.label);
@@ -1038,7 +1038,7 @@ function DoneStep({ name, companion, onEnter }: { name: string; companion: Compa
       </div>
 
       <div className="flex justify-center" style={{ marginBottom: 28 }}>
-        <BuddyBlob size={190} colors={companion.colors} aria-label={`${companion.name}, your Buddy`} />
+        <BuddyBlob size={190} colors={companion.colors} aria-label={`${companion.name}, your buddy`} />
       </div>
       <Heading size={38} mb={10}>
         You're all set, {name}!
@@ -1060,7 +1060,7 @@ function DoneStep({ name, companion, onEnter }: { name: string; companion: Compa
         onClick={() => void save({ onboarding_complete: true }, onEnter)}
       >
         {pending && <Spinner />}
-        Enter Buddy
+        Enter buddy
       </button>
     </div>
   );
@@ -1311,7 +1311,7 @@ export function SignupFlow() {
               filter: "blur(60px)",
             }}
           />
-          <BuddyBlob size={270} colors={companion.colors} aria-label={`${companion.name}, your Buddy`} />
+          <BuddyBlob size={270} colors={companion.colors} aria-label={`${companion.name}, your buddy`} />
           <div className="relative text-center" style={{ maxWidth: 330 }}>
             <div className="font-display" style={{ fontWeight: 600, fontSize: 21, letterSpacing: -0.3, marginBottom: 8 }}>
               {panelTitle}

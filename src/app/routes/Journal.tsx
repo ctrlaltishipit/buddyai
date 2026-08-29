@@ -1,5 +1,5 @@
 /**
- * Journal (light) — write, let Buddy notice, confirm, save.
+ * Journal (light) — write, let buddy notice, confirm, save.
  *
  *   writing ─▶ checking (crisis) ─▶ analyzing (consent-gated) ─▶ confirming ─▶ saving ─▶ writing
  *

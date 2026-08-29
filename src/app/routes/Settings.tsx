@@ -1,7 +1,7 @@
 /**
  * Settings — the light app's "quiet controls" screen.
  *
- * Account · Profile · Reminders · What Buddy stores · Time-off   (left)
+ * Account · Profile · Reminders · What buddy stores · Time-off   (left)
  * Region · Reflector tone · Consents · Change password · Danger  (right)
  *
  * Every settings change goes through store.updateSettings(patch), which is
@@ -57,7 +57,7 @@ const STORED_LINES = [
   "Your account: email and a password hash. Never the password itself.",
   "Your journal: entries, the feelings you confirmed, and your settings, scoped to your account only.",
   "Reflector chats: kept in this browser session only, never saved to the server.",
-  "Never collected: voice audio, location, contacts, anything you didn't type into Buddy.",
+  "Never collected: voice audio, location, contacts, anything you didn't type into buddy.",
 ];
 
 const NAME_MAX = 40;
@@ -433,9 +433,9 @@ function ProfileCard({ settings, save }: { settings: UserSettings; save: Save })
       />
 
       <div className={LABEL} style={{ marginTop: 18 }}>
-        Your Buddy
+        Your buddy
       </div>
-      <div className="grid grid-cols-3 gap-2.5" role="group" aria-label="Your Buddy">
+      <div className="grid grid-cols-3 gap-2.5" role="group" aria-label="Your buddy">
         {COMPANIONS.map((c) => {
           const selected = c.id === settings.companion;
           return (
@@ -559,7 +559,7 @@ function RemindersCard({ settings, save }: { settings: UserSettings; save: Save 
 
 function StoredCard() {
   return (
-    <Card title="What Buddy stores about you" sub="A receipt, not a disclaimer.">
+    <Card title="What buddy stores about you" sub="A receipt, not a disclaimer.">
       <ul className="m-0 flex list-none flex-col gap-[9px] p-0 text-[13.5px] leading-[1.55] text-app-text">
         {STORED_LINES.map((line) => (
           <li key={line} className="flex gap-[9px]">

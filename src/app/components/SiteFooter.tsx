@@ -79,8 +79,8 @@ export function SiteFooter({
             </nav>
           </div>
           <p className="m-0 text-[12px] leading-[1.6] text-dim">
-            Buddy is not a substitute for professional care. If you're in crisis, please reach out to a
-            hotline. Buddy can help you find one.
+            buddy is not a substitute for professional care. If you're in crisis, please reach out to a
+            hotline. buddy can help you find one.
             <br />© 2026 buddy.ai. Yours alone.
           </p>
         </div>

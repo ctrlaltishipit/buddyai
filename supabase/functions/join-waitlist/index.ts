@@ -7,7 +7,7 @@
  *
  * Secrets (set with `supabase secrets set`):
  *   RESEND_API_KEY   from resend.com
- *   WAITLIST_FROM    e.g. "Buddy <hello@buddyai.co.in>"  (domain must be verified)
+ *   WAITLIST_FROM    e.g. "buddy <hello@buddyai.co.in>"  (domain must be verified)
  *
  * SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are injected automatically.
  */
@@ -45,7 +45,7 @@ function welcomeEmail(name: string, companion: string): { subject: string; html:
   const text =
     `Hi ${who},\n\n` +
     `Thanks for creating your buddy. ${buddy} is yours, and will be waiting when we open the doors.\n\n` +
-    `We're building Buddy for the moments when you want to talk and nobody is free. The late nights. ` +
+    `We're building buddy for the moments when you want to talk and nobody is free. The late nights. ` +
     `The days that went sideways. The good news you want to tell someone straight away.\n\n` +
     `You're on the list now. We'll email you the moment your access is ready, and there is nothing ` +
     `else you need to do.\n\n` +
@@ -61,11 +61,11 @@ function welcomeEmail(name: string, companion: string): { subject: string; html:
 <tr><td align="center" style="padding:40px 20px;">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:480px;background:#FFFFFF;border:1px solid #ECE6DC;border-radius:16px;">
 <tr><td style="padding:40px 36px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:#141210;">
-<img src="${LOGO}" width="64" height="64" alt="Buddy" style="display:block;border:0;outline:none;width:64px;height:64px;margin:0 0 24px;">
+<img src="${LOGO}" width="64" height="64" alt="buddy" style="display:block;border:0;outline:none;width:64px;height:64px;margin:0 0 24px;">
 <h1 style="margin:0 0 20px;font-size:25px;line-height:1.25;font-weight:700;color:#141210;">You're on the list.</h1>
 <p style="margin:0 0 16px;font-size:16px;line-height:1.65;color:#3D3833;">Hi ${who},</p>
 <p style="margin:0 0 16px;font-size:16px;line-height:1.65;color:#3D3833;">Thanks for creating your buddy. <strong style="color:#141210;">${buddy}</strong> is yours, and will be waiting when we open the doors.</p>
-<p style="margin:0 0 16px;font-size:16px;line-height:1.65;color:#3D3833;">We're building Buddy for the moments when you want to talk and nobody is free. The late nights. The days that went sideways. The good news you want to tell someone straight away.</p>
+<p style="margin:0 0 16px;font-size:16px;line-height:1.65;color:#3D3833;">We're building buddy for the moments when you want to talk and nobody is free. The late nights. The days that went sideways. The good news you want to tell someone straight away.</p>
 <p style="margin:0 0 16px;font-size:16px;line-height:1.65;color:#3D3833;">You're on the list now. We'll email you the moment your access is ready, and there is nothing else you need to do.</p>
 <p style="margin:0 0 28px;font-size:16px;line-height:1.65;color:#3D3833;">Look after yourself until then.</p>
 <p style="margin:0;font-size:16px;line-height:1.5;color:#141210;font-weight:600;">Deekshitha</p>
@@ -138,7 +138,7 @@ Deno.serve(async (req: Request) => {
   }
 
   const resendKey = Deno.env.get("RESEND_API_KEY");
-  const from = Deno.env.get("WAITLIST_FROM") ?? "Buddy <onboarding@resend.dev>";
+  const from = Deno.env.get("WAITLIST_FROM") ?? "buddy <onboarding@resend.dev>";
   let emailed = false;
 
   if (resendKey) {

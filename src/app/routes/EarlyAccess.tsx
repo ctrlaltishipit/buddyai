@@ -208,7 +208,7 @@ export function EarlyAccess() {
 
               <FieldDark
                 name="display_name"
-                label="What should Buddy call you?"
+                label="What should buddy call you?"
                 placeholder="Your first name (optional)"
                 value={name}
                 autoComplete="given-name"

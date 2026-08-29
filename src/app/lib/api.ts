@@ -81,7 +81,7 @@ async function request<T>(path: string, init: RequestInit = {}, auth = true): Pr
   try {
     res = await fetch(`${API_BASE}${path}`, { ...init, headers });
   } catch {
-    throw new ApiError(`Could not reach Buddy. Is the backend running on ${API_BASE}?`, 0);
+    throw new ApiError(`Could not reach buddy. Is the backend running on ${API_BASE}?`, 0);
   }
 
   if (res.status === 401 && auth && token) {

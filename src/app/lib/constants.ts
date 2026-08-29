@@ -111,10 +111,10 @@ export const SIGNUP_STEPS: Array<"create" | OnboardingStep> = [
 export function signupPanelCopy(step: "create" | OnboardingStep, companionName: string, trait: string) {
   const map: Record<"create" | OnboardingStep, [string, string]> = {
     create: ["Your space, sealed.", "Your entries are private to your account before anything else happens."],
-    verify: ["Just making sure it's you.", "One code, once. Buddy never emails you without a reason."],
-    name: ["Buddy greets you by name.", "Every session starts like a conversation, not a form."],
+    verify: ["Just making sure it's you.", "One code, once. buddy never emails you without a reason."],
+    name: ["buddy greets you by name.", "Every session starts like a conversation, not a form."],
     companion: [`${companionName}: ${trait.toLowerCase()}.`, "Your companion shapes the tone of every reflection."],
-    goals: ["Prompts tuned to your life.", "Buddy uses your picks to ask better questions."],
+    goals: ["Prompts tuned to your life.", "buddy uses your picks to ask better questions."],
     reminder: ["A nudge, never a nag.", "One gentle check-in a day, on the days you choose."],
     done: [`Say hi to ${companionName}.`, "Your space is ready. Everything in it is yours alone."],
   };

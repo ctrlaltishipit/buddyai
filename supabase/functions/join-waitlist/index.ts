@@ -33,12 +33,12 @@ function json(body: unknown, status = 200): Response {
 function welcomeEmail(name: string, companion: string): { subject: string; html: string; text: string } {
   const who = name || "there";
   const buddy = COMPANIONS[companion] ?? "Sage";
-  const subject = "You're on the list for Buddy";
+  const subject = "You've been added to the Buddy waitlist";
   const text =
     `Hi ${who},\n\n` +
-    `You're on the early-access list, and ${buddy} is waiting for you.\n\n` +
-    `We're still building the app. As soon as access opens we'll email you ` +
-    `at this address with your way in. Nothing else to do for now.\n\n` +
+    `You have been added to the waitlist, and ${buddy} is ready when you are.\n\n` +
+    `We will get back to you with an update once the app is live and you can ` +
+    `start using it. Nothing else to do for now.\n\n` +
     `Thanks for being early.\n\nBuddy\nbuddyai.co.in\n`;
   const html = `<!doctype html><html><body style="margin:0;background:#0A0908;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0A0908;padding:40px 20px">
@@ -46,11 +46,11 @@ function welcomeEmail(name: string, companion: string): { subject: string; html:
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;background:#141210;border:1px solid #262220;border-radius:16px;padding:40px">
         <tr><td>
           <div style="width:44px;height:44px;border-radius:46% 54% 55% 45%/53% 47% 53% 47%;background:linear-gradient(160deg,#FFD23F 25%,#FF7A1A 60%,#F24E1E 92%);margin-bottom:26px"></div>
-          <h1 style="margin:0 0 16px;font-size:26px;line-height:1.2;color:#F7F3EA;font-weight:700">You're on the list.</h1>
-          <p style="margin:0 0 16px;font-size:16px;line-height:1.65;color:#B9B1A3">Hi ${who}, thanks for creating your buddy. <strong style="color:#F7F3EA">${buddy}</strong> is waiting for you.</p>
-          <p style="margin:0 0 16px;font-size:16px;line-height:1.65;color:#B9B1A3">We're still building the app. The moment access opens, we'll email you at this address with your way in. There's nothing else you need to do.</p>
+          <h1 style="margin:0 0 16px;font-size:26px;line-height:1.2;color:#F7F3EA;font-weight:700">You have been added to the waitlist.</h1>
+          <p style="margin:0 0 16px;font-size:16px;line-height:1.65;color:#B9B1A3">Hi ${who}, thanks for creating your buddy. <strong style="color:#F7F3EA">${buddy}</strong> is ready when you are.</p>
+          <p style="margin:0 0 16px;font-size:16px;line-height:1.65;color:#B9B1A3">We will get back to you with an update once the app is live and you can start using it. There is nothing else you need to do.</p>
           <p style="margin:0 0 32px;font-size:16px;line-height:1.65;color:#B9B1A3">Thanks for being early.</p>
-          <p style="margin:0;font-size:13px;color:#7D766B">Buddy · <a href="https://buddyai.co.in" style="color:#FF7A1A;text-decoration:none">buddyai.co.in</a><br>You got this because you signed up for early access.</p>
+          <p style="margin:0;font-size:13px;color:#7D766B">Buddy &middot; <a href="https://buddyai.co.in" style="color:#FF7A1A;text-decoration:none">buddyai.co.in</a><br>You got this because you signed up for early access at buddyai.co.in.</p>
         </td></tr>
       </table>
     </td></tr>

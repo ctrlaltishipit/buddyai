@@ -10,6 +10,7 @@ import { Link, useLocation } from "react-router";
 import { ArrowRight, Lock, Sparkles, Waves } from "lucide-react";
 import { BuddyBlob } from "../components/BuddyBlob";
 import { Logo } from "../components/Logo";
+import { SiteFooter } from "../components/SiteFooter";
 import { COMPANIONS } from "../lib/constants";
 import type { CompanionId } from "../lib/types";
 
@@ -82,6 +83,9 @@ const NAV_LINKS = [
   { href: "#how", label: "How it works" },
   { href: "#privacy", label: "Privacy" },
 ] as const;
+
+/** Router links in the nav (anchors above stay on this page). */
+const NAV_ROUTES = [{ to: "/tour", label: "Inside the app" }] as const;
 
 // ---------- Helpers ----------
 
@@ -180,6 +184,11 @@ export function Landing() {
               <a key={l.href} href={l.href}>
                 {l.label}
               </a>
+            ))}
+            {NAV_ROUTES.map((l) => (
+              <Link key={l.to} to={l.to}>
+                {l.label}
+              </Link>
             ))}
           </div>
           <div className="flex items-center gap-3">
@@ -311,6 +320,15 @@ export function Landing() {
                 </div>
               ))}
             </div>
+            <p className="text-center" style={{ margin: "34px 0 0" }}>
+              <Link
+                to="/tour"
+                className="btn btn-outline-dark"
+                style={{ padding: "13px 22px", fontSize: 15 }}
+              >
+                See every screen inside the app <ArrowRight size={16} strokeWidth={2.4} aria-hidden="true" />
+              </Link>
+            </p>
           </div>
         </section>
 
@@ -424,69 +442,9 @@ export function Landing() {
           </div>
         </section>
 
-        {/* ---------- CTA ---------- */}
-        <section className="px-6 pb-[64px]" aria-labelledby="cta-title">
-          <div
-            className="panel-grad strong lp-cta-panel relative mx-auto max-w-[900px] overflow-hidden text-center"
-            style={{ borderRadius: 30 }}
-          >
-            <div
-              className="glow"
-              aria-hidden="true"
-              style={{
-                top: -120,
-                left: "30%",
-                width: 400,
-                height: 400,
-                filter: "blur(60px)",
-                background: "radial-gradient(circle, rgba(255,122,26,.2), transparent 65%)",
-              }}
-            />
-            <h2 id="cta-title" className="h-display relative" style={{ margin: "0 0 12px", fontSize: "clamp(32px, 4.4vw, 48px)" }}>
-              Ready when you are.
-            </h2>
-            <p className="relative text-[16.5px] leading-[1.6] text-fog" style={{ margin: "0 auto 32px", maxWidth: 460 }}>
-              Create your buddy, sign up with Google, and we will email you the moment app access opens.
-            </p>
-            <div className="relative flex flex-wrap justify-center gap-[14px]">
-              <Link to="/signup" className="btn btn-grad btn-lg">
-                Create your buddy for app access
-              </Link>
-            </div>
-          </div>
-        </section>
       </main>
 
-      {/* ---------- Footer ---------- */}
-      <footer className="px-6 pb-11 pt-9" style={{ borderTop: "1px solid rgba(255,255,255,.07)" }}>
-        <div className="container-lg flex flex-col gap-[18px]">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <Link to="/" className="flex items-center gap-[9px] no-underline" style={{ color: "inherit" }} aria-label="buddy.ai home">
-              <span
-                className="block h-[22px] w-[22px]"
-                aria-hidden="true"
-                style={{
-                  borderRadius: "46% 54% 55% 45% / 53% 47% 53% 47%",
-                  background: `linear-gradient(160deg, ${MINT} 25%, ${IRIS} 60%, ${LILAC} 92%)`,
-                }}
-              />
-              <span className="font-display text-[16px] font-bold">buddy.ai</span>
-            </Link>
-            <nav className="lp-footer-links flex flex-wrap gap-[22px] text-[13.5px]" aria-label="Footer">
-              {NAV_LINKS.map((l) => (
-                <a key={l.href} href={l.href}>
-                  {l.label}
-                </a>
-              ))}
-            </nav>
-          </div>
-          <p className="m-0 text-[12px] leading-[1.6] text-dim">
-            Buddy is not a substitute for professional care. If you're in crisis, please reach out to a hotline. Buddy
-            can help you find one.
-            <br />© 2026 buddy.ai. Yours alone.
-          </p>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

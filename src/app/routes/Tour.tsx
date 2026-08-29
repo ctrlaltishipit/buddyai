@@ -115,93 +115,132 @@ const TOUR_CSS = `
 .tr-links a:hover { color: #F7F3EA; }
 .tr-anchor { scroll-margin-top: 84px; }
 
-/* Each section is a card that settles into place as it enters the viewport. */
+/* Each section owns a viewport and carries one slow drifting glow behind it,
+   so there is always something quietly moving without competing with the copy. */
+.tr-sec { position: relative; }
+.tr-amb { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+.tr-amb .glow { opacity: .55; }
+
+/* Lighter card: a hairline and a whisper of fill, not a heavy panel. */
 .tr-card {
-  max-width: 1080px;
+  position: relative;
+  z-index: 1;
+  max-width: 1000px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 380px;
-  gap: 64px;
+  grid-template-columns: 1fr 300px;
+  gap: 52px;
   align-items: center;
-  padding: 56px 60px;
-  border-radius: 28px;
-  border: 1px solid rgba(255,255,255,.08);
-  background:
-    radial-gradient(120% 140% at 100% 0%, rgba(255,122,26,.07), transparent 60%),
-    rgba(255,255,255,.022);
+  padding: 40px 44px;
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,.055);
+  background: rgba(255,255,255,.014);
+  backdrop-filter: blur(2px);
 }
-.tr-card.flip { grid-template-columns: 380px 1fr; }
+.tr-card.flip { grid-template-columns: 300px 1fr; }
 .tr-card.flip .tr-copy { order: 2; }
 .tr-card.flip .tr-device { order: 1; }
 
-/* Phone frame. Every screenshot is the same pixel size, so one frame fits all. */
 .tr-device { display: flex; justify-content: center; }
 .tr-phone {
   position: relative;
   width: 100%;
-  max-width: 300px;
+  max-width: 244px;
   aspect-ratio: 490 / 1060;
-  border-radius: 42px;
-  padding: 10px;
+  border-radius: 34px;
+  padding: 8px;
   background: linear-gradient(160deg, #2A2621, #131110 60%);
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,.10),
-    0 40px 80px rgba(0,0,0,.60),
-    inset 0 1px 0 rgba(255,255,255,.14);
+  box-shadow: 0 0 0 1px rgba(255,255,255,.09), 0 26px 56px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.13);
 }
 .tr-phone::after {
-  content: "";
-  position: absolute;
-  top: 20px; left: 50%; transform: translateX(-50%);
-  width: 84px; height: 7px; border-radius: 99px;
-  background: rgba(0,0,0,.55);
-  z-index: 2;
+  content: ""; position: absolute; top: 16px; left: 50%; transform: translateX(-50%);
+  width: 68px; height: 6px; border-radius: 99px; background: rgba(0,0,0,.55); z-index: 2;
 }
-.tr-screen { width: 100%; height: 100%; border-radius: 33px; overflow: hidden; background: #FAF7F1; }
+.tr-screen { width: 100%; height: 100%; border-radius: 27px; overflow: hidden; background: #FAF7F1; }
 .tr-screen img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
 
-.tr-band { max-width: 1080px; margin: 0 auto; padding: 54px 60px; border-radius: 28px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.022); }
-.tr-two { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; }
-.tr-ritual h3 { font-size: 20px; margin: 0 0 10px; }
-.tr-table-wrap { overflow-x: auto; border-radius: 16px; border: 1px solid rgba(255,255,255,.09); }
-.tr-table { border-collapse: collapse; width: 100%; min-width: 620px; font-size: 14.5px; }
-.tr-table th, .tr-table td { text-align: left; padding: 13px 16px; border-bottom: 1px solid rgba(255,255,255,.07); }
-.tr-table thead th { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: #7D766B; background: rgba(255,255,255,.03); }
+/* Prose blocks share the card's lightness. */
+.tr-band {
+  position: relative; z-index: 1;
+  max-width: 1000px; margin: 0 auto; padding: 40px 44px;
+  border-radius: 24px; border: 1px solid rgba(255,255,255,.055);
+  background: rgba(255,255,255,.014);
+}
+.tr-two { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+.tr-ritual h3 { font-size: 19px; margin: 0 0 9px; }
+.tr-table-wrap { overflow-x: auto; border-radius: 14px; border: 1px solid rgba(255,255,255,.08); }
+.tr-table { border-collapse: collapse; width: 100%; min-width: 600px; font-size: 14px; }
+.tr-table th, .tr-table td { text-align: left; padding: 11px 14px; border-bottom: 1px solid rgba(255,255,255,.06); }
+.tr-table thead th { font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: #7D766B; background: rgba(255,255,255,.025); }
 .tr-table tbody tr:last-child td { border-bottom: 0; }
 .tr-table td:first-child { color: #B9B1A3; }
-.tr-table .tr-us { color: #F7F3EA; font-weight: 600; background: rgba(255,122,26,.06); }
-.tr-table thead .tr-us { color: #FF7A1A; background: rgba(255,122,26,.09); }
-.tr-limits { display: grid; gap: 14px; }
-.tr-limit { padding: 16px 18px; border-radius: 14px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.02); }
-@media (max-width: 980px) {
-  .tr-band { padding: 40px 28px; }
-  .tr-two { grid-template-columns: 1fr; gap: 30px; }
-}
-@media (max-width: 720px) { .tr-band { padding: 32px 22px; border-radius: 22px; } }
-.tr-jump { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
-.tr-jump a { display: inline-flex; align-items: center; gap: 8px; padding: 9px 15px; border-radius: 999px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.03); color: #B9B1A3; font-size: 13.5px; text-decoration: none; transition: border-color .15s ease, color .15s ease; }
+.tr-table .tr-us { color: #F7F3EA; font-weight: 600; background: rgba(255,122,26,.05); }
+.tr-table thead .tr-us { color: #FF7A1A; background: rgba(255,122,26,.08); }
+.tr-limits { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.tr-limit { padding: 15px 16px; border-radius: 13px; border: 1px solid rgba(255,255,255,.07); background: rgba(255,255,255,.018); }
+
+.tr-jump { display: flex; flex-wrap: wrap; gap: 9px; justify-content: center; }
+.tr-jump a { display: inline-flex; align-items: center; gap: 7px; padding: 8px 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,.11); background: rgba(255,255,255,.025); color: #B9B1A3; font-size: 13px; text-decoration: none; transition: border-color .15s ease, color .15s ease; }
 .tr-jump a:hover { color: #F7F3EA; border-color: rgba(255,255,255,.3); }
 
-/* Reveal on scroll: the card lifts and settles, the phone follows a beat later. */
-[data-reveal] { opacity: 0; transform: translateY(34px) scale(.985); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); will-change: opacity, transform; }
+[data-reveal] { opacity: 0; transform: translateY(30px) scale(.99); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); will-change: opacity, transform; }
 [data-reveal="in"] { opacity: 1; transform: none; }
-[data-reveal] .tr-device { opacity: 0; transform: translateY(26px); transition: opacity .75s cubic-bezier(.2,.7,.2,1) .12s, transform .75s cubic-bezier(.2,.7,.2,1) .12s; }
+[data-reveal] .tr-device { opacity: 0; transform: translateY(22px); transition: opacity .75s cubic-bezier(.2,.7,.2,1) .12s, transform .75s cubic-bezier(.2,.7,.2,1) .12s; }
 [data-reveal="in"] .tr-device { opacity: 1; transform: none; }
 
 @media (max-width: 980px) {
-  .tr-card, .tr-card.flip { grid-template-columns: 1fr; gap: 36px; padding: 44px 30px; text-align: left; }
+  .tr-card, .tr-card.flip { grid-template-columns: 1fr; gap: 30px; padding: 34px 26px; }
   .tr-card.flip .tr-copy, .tr-card.flip .tr-device { order: 0; }
-  .tr-phone { max-width: 268px; }
+  .tr-phone { max-width: 224px; }
+  .tr-band { padding: 32px 26px; }
+  .tr-two { grid-template-columns: 1fr; gap: 26px; }
+  .tr-limits { grid-template-columns: 1fr; }
 }
 @media (max-width: 720px) {
   .tr-links { display: none; }
   .tr-nav { padding: 12px 18px; gap: 12px; }
-  .tr-card, .tr-card.flip { padding: 34px 22px; border-radius: 22px; }
+  .tr-card, .tr-card.flip, .tr-band { padding: 26px 20px; border-radius: 20px; }
 }
 @media (prefers-reduced-motion: reduce) {
   [data-reveal], [data-reveal] .tr-device { opacity: 1; transform: none; transition: none; }
+  .tr-amb .glow { animation: none !important; }
 }
 `;
+
+/**
+ * One slow-drifting glow behind a section. Deliberately faint: it should read
+ * as something moving at the edge of vision, not as decoration competing with
+ * the copy. Alternates side and colour so consecutive screens differ.
+ */
+function Ambient({ i, color }: { i: number; color: string }) {
+  const right = i % 2 === 1;
+  const tone = color === MINT ? "glow-sun" : color === LILAC ? "glow-ember" : "glow-orange";
+  return (
+    <div className="tr-amb" aria-hidden="true">
+      <div
+        className={`glow ${tone}`}
+        style={{
+          top: i % 3 === 0 ? "-14%" : "18%",
+          [right ? "right" : "left"]: "-6%",
+          width: 520,
+          height: 520,
+          animation: `drift-${right ? 2 : 1} ${26 + i * 4}s ease-in-out infinite`,
+        }}
+      />
+      <div
+        className="glow glow-orange"
+        style={{
+          bottom: "-18%",
+          [right ? "left" : "right"]: "12%",
+          width: 380,
+          height: 380,
+          opacity: 0.5,
+          animation: `drift-${right ? 1 : 2} ${34 + i * 3}s ease-in-out infinite reverse`,
+        }}
+      />
+    </div>
+  );
+}
 
 export function Tour() {
   const location = useLocation();
@@ -236,6 +275,7 @@ export function Tour() {
           <Logo tone="dark" to="/" />
           <div className="tr-links">
             <Link to="/">Home</Link>
+            <Link to="/about">About</Link>
             <Link to="/#why">Why buddy</Link>
             <Link to="/#privacy">Privacy</Link>
           </div>
@@ -282,10 +322,11 @@ export function Tour() {
           <section
             key={s.id}
             id={s.id}
-            className="tr-anchor px-6"
-            style={{ paddingBottom: 26 }}
+            className="tr-anchor tr-sec px-6"
+            style={{ paddingTop: 30, paddingBottom: 30 }}
             aria-labelledby={`${s.id}-title`}
           >
+            <Ambient i={i} color={s.color} />
             <div className={`tr-card${i % 2 === 1 ? " flip" : ""}`} data-reveal="">
               <div className="tr-copy">
                 <p className="eyebrow" style={{ margin: "0 0 12px", color: s.color }}>
@@ -332,7 +373,8 @@ export function Tour() {
         ))}
 
         {/* Why coming back matters. Tied to the map, not to a badge. */}
-        <section className="tr-anchor px-6" id="streak" style={{ paddingTop: 26, paddingBottom: 26 }}>
+        <section className="tr-anchor tr-sec px-6" id="streak" style={{ paddingTop: 30, paddingBottom: 30 }}>
+          <Ambient i={5} color={MINT} />
           <div className="tr-band" data-reveal="">
             <p className="eyebrow" style={{ margin: "0 0 12px", color: MINT }}>
               COMING BACK
@@ -369,7 +411,8 @@ export function Tour() {
         </section>
 
         {/* Not another journal */}
-        <section className="tr-anchor px-6" id="different" style={{ paddingTop: 26, paddingBottom: 26 }}>
+        <section className="tr-anchor tr-sec px-6" id="different" style={{ paddingTop: 30, paddingBottom: 30 }}>
+          <Ambient i={6} color={LILAC} />
           <div className="tr-band" data-reveal="">
             <p className="eyebrow" style={{ margin: "0 0 12px", color: LILAC }}>
               WHAT MAKES IT DIFFERENT
@@ -424,7 +467,8 @@ export function Tour() {
         </section>
 
         {/* Daily ritual */}
-        <section className="tr-anchor px-6" id="ritual" style={{ paddingTop: 26, paddingBottom: 26 }}>
+        <section className="tr-anchor tr-sec px-6" id="ritual" style={{ paddingTop: 30, paddingBottom: 30 }}>
+          <Ambient i={7} color={IRIS} />
           <div className="tr-band" data-reveal="">
             <p className="eyebrow" style={{ margin: "0 0 12px", color: IRIS }}>
               A PLACE IN YOUR DAY
@@ -454,7 +498,8 @@ export function Tour() {
         </section>
 
         {/* Depth and limits */}
-        <section className="tr-anchor px-6" id="limits" style={{ paddingTop: 26, paddingBottom: 26 }}>
+        <section className="tr-anchor tr-sec px-6" id="limits" style={{ paddingTop: 30, paddingBottom: 30 }}>
+          <Ambient i={8} color={MINT} />
           <div className="tr-band" data-reveal="">
             <p className="eyebrow" style={{ margin: "0 0 12px", color: MINT }}>
               YOU SET THE DEPTH

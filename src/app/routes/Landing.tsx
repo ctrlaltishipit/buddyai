@@ -85,7 +85,10 @@ const NAV_LINKS = [
 ] as const;
 
 /** Router links in the nav (anchors above stay on this page). */
-const NAV_ROUTES = [{ to: "/tour", label: "Inside the app" }] as const;
+const NAV_ROUTES = [
+  { to: "/tour", label: "Inside the app" },
+  { to: "/about", label: "About" },
+] as const;
 
 // ---------- Helpers ----------
 

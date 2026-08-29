@@ -16,6 +16,7 @@ import { SignupFlow } from "./routes/SignupFlow";
 import { EarlyAccess } from "./routes/EarlyAccess";
 import { Welcome } from "./routes/Welcome";
 import { Tour } from "./routes/Tour";
+import { About } from "./routes/About";
 
 /**
  * The journal app is built but not released. While this is false the public
@@ -128,6 +129,7 @@ export default function App() {
         />
         <Route path="/welcome" element={<Welcome />} />
         <Route path="/tour" element={<Tour />} />
+        <Route path="/about" element={<About />} />
         <Route
           path="/app"
           element={

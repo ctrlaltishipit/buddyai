@@ -71,7 +71,6 @@ const SECTIONS: Section[] = [
       "Starters for when you don't know how to begin",
       "Questions that open things up instead of closing them down",
       "The conversation stays in your browser and is never saved",
-      "Every message is checked for crisis language before anything else",
     ],
     shot: "/shots/reflector.png",
     alt: "A conversation with the Reflector, which replies with a question rather than advice",

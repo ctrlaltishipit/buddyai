@@ -1,0 +1,11 @@
+# buddy.ai — https://www.buddyai.co.in
+# Public marketing pages are open to crawl. Everything behind sign-in, and the
+# post-OAuth landing screen, is private and has nothing worth indexing.
+
+User-agent: *
+Allow: /
+Disallow: /app/
+Disallow: /auth
+Disallow: /welcome
+
+Sitemap: https://www.buddyai.co.in/sitemap.xml

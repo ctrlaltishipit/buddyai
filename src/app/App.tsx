@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes, useLocation } from "react-router";
 import { useEffect, type ReactNode } from "react";
 import { trackPageView } from "./lib/analytics";
+import { applyRouteMeta } from "./lib/seo";
 import { BuddyBlob } from "./components/BuddyBlob";
 import { CrisisModal } from "./components/CrisisModal";
 import { useStore } from "./lib/store";
@@ -82,10 +83,15 @@ function ToastHost() {
   );
 }
 
-/** Sends one GA page view per route change (SPA navigations are invisible to gtag). */
+/**
+ * On every route change: set the page's title/description/canonical/robots for
+ * crawlers, then send one GA page view (SPA navigations are invisible to gtag,
+ * and it reads document.title, so the meta update has to come first).
+ */
 function usePageViews() {
   const { pathname } = useLocation();
   useEffect(() => {
+    applyRouteMeta(pathname);
     trackPageView(pathname);
   }, [pathname]);
 }

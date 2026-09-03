@@ -13,13 +13,13 @@ anything sensitive is staged.
 **Never commit secrets.** This repo has real credentials on disk. If any of the
 files below are ever staged, STOP and tell the user rather than committing:
 
-- `web/.env.local` — Supabase URL and publishable key
-- `web/backend/.env` — service-role key, JWT secret, database password, Resend key
-- `web/backend/buddy.db*` — real user accounts and journal entries
-- `web/.vercel/` — local project link
+- `.env.local` — Supabase URL and publishable key
+- `backend/.env` — service-role key, JWT secret, database password, Resend key
+- `backend/buddy.db*` — real user accounts and journal entries
+- `.vercel/` — local project link
 - Anything matching `sb_secret_`, `re_`, `sbp_`, `eyJhbGciOi`, `GOCSPX`, `postgresql+psycopg://…:…@`
 
-These are covered by `web/.gitignore`. Verify, don't assume: `.gitignore` has been
+These are covered by `.gitignore`. Verify, don't assume: `.gitignore` has been
 silently rewritten before by the Vercel CLI appending `.env*` after the
 `!.env.example` exception.
 
@@ -28,7 +28,7 @@ silently rewritten before by the Vercel CLI appending `.env*` after the
 1. **Check state**
 
    ```bash
-   cd "/Users/deekshithasreerala/Downloads/Buddy app/web"
+   cd "/Users/deekshithasreerala/Documents/Buddy app"
    git status --short
    ```
 

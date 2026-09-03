@@ -1,6 +1,6 @@
 # buddy.ai — Notes for Claude (and future-you)
 
-Read this once before making changes. It is the memory layer for working in `web/`.
+Read this once before making changes. It is the memory layer for working in this repo (`~/Documents/Buddy app`, deployed to https://www.buddyai.co.in).
 
 > **Tagline:** The journal that listens back.
 > buddy.ai is a journaling app with a non-directive AI companion ("The Reflector") and an
@@ -15,7 +15,7 @@ Every color, radius, size and line of copy comes from there. When in doubt, open
 ## Project layout
 
 ```
-web/
+Buddy app/          (git: ctrlaltishipit/buddyai · Vercel project: buddyai)
 ├── index.html                    Google Fonts (Bricolage Grotesque + Plus Jakarta Sans), PWA meta
 ├── design/buddy-redesign.reference.html   THE DESIGN SPEC (read-only reference)
 ├── public/                       manifest + icons

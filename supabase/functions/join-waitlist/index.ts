@@ -132,8 +132,12 @@ Deno.serve(async (req: Request) => {
   );
   if (upsertErr) return json({ error: "Could not save your spot" }, 500);
 
-  // Only ever email once, even if they sign in again.
-  if (existing?.welcomed_at) {
+  // Someone who comes back and creates their buddy again should hear from us
+  // again, otherwise the flow ends in silence. Cap it at one email a day so a
+  // repeat click (or abuse) can't turn the waitlist into a spam cannon.
+  const RESEND_AFTER_MS = 24 * 60 * 60 * 1000;
+  const lastWelcomed = existing?.welcomed_at ? Date.parse(existing.welcomed_at) : 0;
+  if (lastWelcomed && Date.now() - lastWelcomed < RESEND_AFTER_MS) {
     return json({ ok: true, alreadyOnList: true, emailed: false });
   }
 

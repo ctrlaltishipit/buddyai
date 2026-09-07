@@ -10,10 +10,12 @@
 import type { CSSProperties, ReactNode } from "react";
 import { Link, Outlet, useMatch, useNavigate } from "react-router";
 import { BookOpen, House, LogOut, MessageCircle, Settings, Waves, type LucideIcon } from "lucide-react";
+import { GuidedTour } from "../components/GuidedTour";
 import { Logo } from "../components/Logo";
 import { insightsApi } from "../lib/api";
 import { firstName } from "../lib/constants";
 import { useStore } from "../lib/store";
+import { APP_TOUR, useTour } from "../lib/tours";
 import { useAsync } from "../lib/useAsync";
 
 // Nav icons are lucide: house, book-open (journal), waves (map), message-circle (reflector), settings.
@@ -47,6 +49,7 @@ function NavItem({
       className={className}
       style={style}
       data-active={active ? "true" : "false"}
+      data-tour={`nav-${to.split("/").pop()}`}
       aria-current={active ? "page" : undefined}
     >
       {children}
@@ -144,6 +147,9 @@ export function AppShell() {
   const { state, signOut } = useStore();
   const navigate = useNavigate();
   const summary = useAsync(() => insightsApi.summary(), [state.entriesVersion]);
+  // First time in after onboarding: point out what each part of the app does.
+  // Waits for the streak to load so the sidebar card is there to spotlight.
+  const tour = useTour("app", { delayMs: 1200, when: !summary.loading });
 
   const name = firstName(state.settings?.display_name, state.user?.email);
   const initial = name.charAt(0).toUpperCase();
@@ -173,12 +179,14 @@ export function AppShell() {
 
         <div className="flex-1" />
 
-        <StreakCard
-          days={summary.data?.streak_days ?? null}
-          loading={summary.loading}
-          error={summary.error}
-          onRetry={() => void summary.reload()}
-        />
+        <div data-tour="streak">
+          <StreakCard
+            days={summary.data?.streak_days ?? null}
+            loading={summary.loading}
+            error={summary.error}
+            onRetry={() => void summary.reload()}
+          />
+        </div>
 
         <div className="flex items-center gap-[10px]" style={{ padding: "12px 10px 2px" }}>
           <div
@@ -226,6 +234,8 @@ export function AppShell() {
           </NavItem>
         ))}
       </nav>
+
+      <GuidedTour steps={APP_TOUR} open={tour.open} tone="light" onClose={tour.close} />
     </div>
   );
 }

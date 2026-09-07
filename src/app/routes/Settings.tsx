@@ -10,12 +10,13 @@
  */
 import { useEffect, useId, useState, type CSSProperties, type FormEvent, type ReactNode } from "react";
 import { useNavigate } from "react-router";
-import { Download, LogOut, Moon } from "lucide-react";
+import { Compass, Download, LogOut, Moon } from "lucide-react";
 import clsx from "clsx";
 import { BuddyBlob } from "../components/BuddyBlob";
 import { authApi, errorMessage, exportApi } from "../lib/api";
 import { COMPANIONS, DAY_LABELS, DAY_NAMES } from "../lib/constants";
 import { useStore } from "../lib/store";
+import { requestTour } from "../lib/tours";
 import type { Region, SettingsPatch, Tone, UserPublic, UserSettings } from "../lib/types";
 
 // ---------- Vocabulary (copy verbatim from the reference) ----------
@@ -321,6 +322,7 @@ function AccountCard({
   onSignOut: () => void;
   showToast: (message: string) => void;
 }) {
+  const navigate = useNavigate();
   const [exporting, setExporting] = useState(false);
 
   const handleExport = async () => {
@@ -384,6 +386,18 @@ function AccountCard({
         <button type="button" className="btn btn-soft" style={{ gap: 8 }} onClick={onSignOut}>
           <LogOut size={14} strokeWidth={1.8} aria-hidden="true" />
           Sign out
+        </button>
+        <button
+          type="button"
+          className="btn btn-soft"
+          style={{ gap: 8 }}
+          onClick={() => {
+            requestTour("app");
+            navigate("/app/home");
+          }}
+        >
+          <Compass size={14} strokeWidth={1.8} aria-hidden="true" />
+          Replay the tour
         </button>
       </div>
     </Card>

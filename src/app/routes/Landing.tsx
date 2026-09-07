@@ -9,9 +9,11 @@ import { useEffect, useState, type CSSProperties } from "react";
 import { Link, useLocation } from "react-router";
 import { ArrowRight, Lock, Sparkles, Waves } from "lucide-react";
 import { BuddyBlob } from "../components/BuddyBlob";
+import { GuidedTour } from "../components/GuidedTour";
 import { Logo } from "../components/Logo";
 import { SiteFooter } from "../components/SiteFooter";
 import { COMPANIONS } from "../lib/constants";
+import { LANDING_TOUR, useTour } from "../lib/tours";
 import type { CompanionId } from "../lib/types";
 
 // ---------- Palette (mirrors @theme tokens; used for inline one-offs) ----------
@@ -154,6 +156,9 @@ const LANDING_CSS = `
 export function Landing() {
   const small = useMediaQuery("(max-width: 640px)");
   const location = useLocation();
+  // First visit: walk newcomers through the page. Someone arriving at a deep
+  // link like /#privacy came for one thing, so leave them to it.
+  const tour = useTour("landing", { delayMs: 1400, when: !location.hash });
 
   // Deep links like /#privacy: the page mounts after the session hydrates, so
   // the browser's own fragment jump has nothing to land on. Do it ourselves.
@@ -189,13 +194,13 @@ export function Landing() {
               </a>
             ))}
             {NAV_ROUTES.map((l) => (
-              <Link key={l.to} to={l.to}>
+              <Link key={l.to} to={l.to} data-tour={l.to === "/tour" ? "inside" : undefined}>
                 {l.label}
               </Link>
             ))}
           </div>
           <div className="flex items-center gap-3">
-            <Link to="/signup" className="btn btn-grad btn-sm">
+            <Link to="/signup" className="btn btn-grad btn-sm" data-tour="cta">
               Get early access
             </Link>
           </div>
@@ -221,7 +226,7 @@ export function Landing() {
             style={{ bottom: -220, left: "38%", width: 520, height: 520, filter: "blur(80px)", animation: "drift-1 38s ease-in-out infinite reverse" }}
           />
 
-          <div className="relative mx-auto max-w-[900px]">
+          <div className="relative mx-auto max-w-[900px]" data-tour="hero">
             <div className="anim-fade-up flex justify-center" style={fadeUp(0)}>
               <BuddyBlob size={small ? 220 : 300} float aria-label="buddy, your companion" />
             </div>
@@ -259,6 +264,9 @@ export function Landing() {
               <Link to="/signup" className="btn btn-grad btn-lg">
                 Create your buddy for early access <ArrowRight size={17} strokeWidth={2.4} aria-hidden="true" />
               </Link>
+              <button type="button" className="btn btn-outline-dark" onClick={tour.start}>
+                Show me around
+              </button>
             </div>
             <p className="anim-fade-up text-dim" style={{ ...fadeUp(0.42), margin: "22px 0 0", fontSize: 13 }}>
               Takes a minute&nbsp;&nbsp;·&nbsp;&nbsp;Private by design&nbsp;&nbsp;·&nbsp;&nbsp;Free while we build
@@ -268,7 +276,7 @@ export function Landing() {
 
         {/* ---------- Why buddy ---------- */}
         <section id="why" className="lp-anchor px-6 pb-[56px] pt-1" aria-label="Why buddy">
-          <div className="container-lg grid-3" style={{ gap: 22 }}>
+          <div className="container-lg grid-3" data-tour="why" style={{ gap: 22 }}>
             {WHY.map(({ Icon, color, bg, tint, title, body }) => (
               <article
                 key={title}
@@ -289,7 +297,7 @@ export function Landing() {
 
         {/* ---------- How it works ---------- */}
         <section id="how" className="lp-anchor px-6 pb-[64px] pt-6" aria-labelledby="how-title">
-          <div className="container-lg">
+          <div className="container-lg" data-tour="how">
             <p className="eyebrow text-center text-iris" style={{ margin: "0 0 12px" }}>
               HOW IT WORKS
             </p>
@@ -337,7 +345,7 @@ export function Landing() {
 
         {/* ---------- Emotion map teaser ---------- */}
         <section className="px-6 pb-[64px] pt-1" aria-labelledby="map-title">
-          <div className="container-lg lp-map-grid">
+          <div className="container-lg lp-map-grid" data-tour="map">
             <div>
               <p className="eyebrow text-mint" style={{ margin: "0 0 12px" }}>
                 EMOTION MAP
@@ -381,7 +389,7 @@ export function Landing() {
 
         {/* ---------- Privacy ---------- */}
         <section id="privacy" className="lp-anchor px-6 pb-[64px]" aria-labelledby="privacy-title">
-          <div className="panel-grad container-lg lp-privacy">
+          <div className="panel-grad container-lg lp-privacy" data-tour="privacy">
             <div
               className="grid h-[96px] w-[96px] place-items-center rounded-full"
               style={{
@@ -412,7 +420,7 @@ export function Landing() {
 
         {/* ---------- Companions ---------- */}
         <section className="px-6 pb-[64px]" aria-labelledby="companions-title">
-          <div className="container-lg text-center">
+          <div className="container-lg text-center" data-tour="companions">
             <p className="eyebrow text-lilac" style={{ margin: "0 0 12px" }}>
               COMPANIONS
             </p>
@@ -448,6 +456,8 @@ export function Landing() {
       </main>
 
       <SiteFooter />
+
+      <GuidedTour steps={LANDING_TOUR} open={tour.open} tone="dark" onClose={tour.close} />
     </div>
   );
 }

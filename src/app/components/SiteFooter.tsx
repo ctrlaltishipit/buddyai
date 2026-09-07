@@ -63,7 +63,9 @@ export function SiteFooter({
             </Link>
             <nav className="lp-footer-links flex flex-wrap gap-[22px] text-[13.5px]" aria-label="Footer">
               <Link to="/">Home</Link>
-              <Link to="/tour">Inside the app</Link>
+              <Link to="/tour" data-tour="inside">
+                Inside the app
+              </Link>
               <Link to="/about">About</Link>
               <Link to="/#privacy">Privacy</Link>
               <Link to="/signup">Early access</Link>

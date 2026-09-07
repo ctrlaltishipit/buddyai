@@ -144,7 +144,7 @@ export function Home() {
       )}
 
       {/* Stats */}
-      <section className="grid-3" style={{ marginTop: 28 }} aria-label="This week at a glance" aria-busy={summary.loading}>
+      <section className="grid-3" style={{ marginTop: 28 }} aria-label="This week at a glance" aria-busy={summary.loading} data-tour="home-stats">
         {summary.loading && !s ? (
           <>
             {["Entries this week", "Last 7 days", "Leaning"].map((label) => (
@@ -186,7 +186,7 @@ export function Home() {
       </section>
 
       {/* The lowest-effort way onto the map, above the actions that need writing. */}
-      <section style={{ marginTop: 16 }} aria-label="Quick check-in">
+      <section style={{ marginTop: 16 }} aria-label="Quick check-in" data-tour="home-checkin">
         <MoodCheckIn />
       </section>
 

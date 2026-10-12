@@ -7,7 +7,7 @@
  */
 import { Link } from "react-router";
 import { ArrowRight } from "lucide-react";
-import { BuddyBlob } from "./BuddyBlob";
+import { Logo } from "./Logo";
 
 export interface SiteFooterProps {
   /** Headline above the call to action. */
@@ -54,12 +54,11 @@ export function SiteFooter({
           <div className="flex flex-wrap items-center justify-between gap-4">
             <Link
               to="/"
-              className="flex items-center gap-[9px] no-underline"
+              className="flex items-center no-underline"
               style={{ color: "inherit" }}
               aria-label="buddy.ai home"
             >
-              <BuddyBlob size={22} glow={false} follow={false} aria-label="" />
-              <span className="font-display text-[16px] font-bold">buddy.ai</span>
+              <Logo tone="dark" size={16} />
             </Link>
             <nav className="lp-footer-links flex flex-wrap gap-[22px] text-[13.5px]" aria-label="Footer">
               <Link to="/">Home</Link>

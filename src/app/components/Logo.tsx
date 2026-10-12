@@ -20,15 +20,16 @@ export interface LogoProps {
 
 export function Logo({ tone = "dark", size = 19, to, className }: LogoProps) {
   const mark = Math.round(size * 1.37); // 26px at 19px
+  const k = size / 19; // the lockup is drawn at 19px: 10px gap, -0.5px tracking
   const inner = (
     <span
-      className={`inline-flex items-center gap-[10px] ${className ?? ""}`}
-      style={{ lineHeight: 1 }}
+      className={`inline-flex items-center ${className ?? ""}`}
+      style={{ lineHeight: 1, gap: 10 * k }}
     >
       <BuddyBlob size={mark} glow={false} follow={false} aria-label="" />
       <span
         className="font-display font-bold"
-        style={{ fontSize: size, letterSpacing: -0.5, color: tone === "dark" ? "#F7F3EA" : "#141210" }}
+        style={{ fontSize: size, letterSpacing: -0.5 * k, color: tone === "dark" ? "#F7F3EA" : "#141210" }}
       >
         buddy
         {tone === "dark" ? (

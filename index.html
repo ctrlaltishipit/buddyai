@@ -24,7 +24,9 @@
     <meta name="twitter:description" content="buddy.ai is a companion and a journal in one. Vent, think out loud, or write the day down. buddy listens, helps you make sense of it, and keeps every word private to you." />
 
     <link rel="manifest" href="/manifest.webmanifest" />
-    <link rel="apple-touch-icon" href="/icon-192.svg" />
+    <!-- iOS ignores SVG touch icons and older Safari ignores SVG favicons, so both get a bitmap of the same icon. -->
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" type="image/svg+xml" href="/icon.svg" />
 
     <!-- Type: Bricolage Grotesque (display) + Plus Jakarta Sans (body/UI) -->
